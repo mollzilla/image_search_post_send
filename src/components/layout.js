@@ -10,7 +10,30 @@ import PropTypes from "prop-types"
 import { useStaticQuery, graphql } from "gatsby"
 
 import Header from "./header"
+import Footer from "./footer"
 import "./layout.css"
+
+import { createStore } from "redux"
+
+const initialStore = {
+  images: 0,
+}
+
+function reducer(state, action) {
+  console.log("hello from reducer")
+  console.log(state, action)
+
+  if (action.type === "SEARCH") {
+    console.log("search dispatched")
+  }
+  return state
+}
+
+const store = createStore(reducer, initialStore)
+
+console.log(store.getState())
+
+store.dispatch({ type: "SEARCH" })
 
 const Layout = ({ children }) => {
   const data = useStaticQuery(graphql`
@@ -25,23 +48,12 @@ const Layout = ({ children }) => {
 
   return (
     <>
-      <Header siteTitle={data.site.siteMetadata?.title || `Title`} />
-      <div style={{ backgroundColor: "#AECF8080" }}>
-        <main>{children}</main>
-        <footer
-          style={{
-            marginTop: `2rem`,
-          }}
-        >
-          © {new Date().getFullYear()}, Built with
-          {` `}
-          <a href="https://github.com/mollzilla">Gatsby by Mollzilla.</a>
-          <br />
-          <a href="https://github.com/mollzilla">
-            Find out why they call me Mollzilla.
-          </a>
-        </footer>
-      </div>
+      <Header
+        results={store.getState()}
+        siteTitle={data.site.siteMetadata?.title || `Title`}
+      />
+      <main style={{ backgroundColor: "#AECF8080" }}>{children}</main>
+      <Footer />
     </>
   )
 }

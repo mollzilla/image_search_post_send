@@ -2,7 +2,10 @@ import * as React from "react"
 import { Link } from "gatsby"
 import styled from "styled-components"
 
-const Header = ({ siteTitle }) => (
+const Header = ({results, siteTitle}) => {
+  
+  console.log(results)
+  return (
   <HeaderStyle>
     <h1 style={{ margin: 0 }}>
       <Link to="/">{siteTitle}</Link>
@@ -19,7 +22,7 @@ const Header = ({ siteTitle }) => (
       </ul>
     </nav>
   </HeaderStyle>
-)
+)}
 
 export default Header
 

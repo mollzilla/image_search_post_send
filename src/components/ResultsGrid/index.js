@@ -1,7 +1,11 @@
 import * as React from "react"
 import styled from "styled-components"
 
-const ResultsGrid = () => (
+const ResultsGrid = (props) => {
+  
+  console.log(props);
+  
+  return (
   <>
     <h1>Showing 20 results</h1>
     <Grid >
@@ -13,7 +17,7 @@ const ResultsGrid = () => (
       <img src="https://place-puppy.com/300x300" alt="search result" />
     </Grid>
   </>
-)
+)}
 
 export default ResultsGrid
 

@@ -1,13 +1,19 @@
-import * as React from "react"
+import React, { useState } from "react"
+
 import styled from "styled-components"
 
 
-const SearchBar = () => (
+const SearchBar = () => {
+  const [keywords, setKeywords] = useState("")
+  
+  const onKeywordChange = e => {setKeywords(e.target.value); console.log(e.target.value); console.log(keywords)};
+
+  return(
     <SearchForm>
-      <input type="text" placeholder="Find it!"></input>
+      <input type="text" placeholder="Find it!" onChange={onKeywordChange} value={keywords}></input>
       <button>Hit it!</button> {/* According to assignment not necessary but for UI purposes will include it */}
     </SearchForm>
-)
+);}
 
 //#E04485D
 //#322885
