@@ -2,7 +2,6 @@ import React, { useState } from "react"
 
 import styled from "styled-components"
 
-
 const SearchBar = () => {
   const [keywords, setKeywords] = useState("")
   

@@ -27,6 +27,8 @@ Hamburger will be revisited later as well.
 
 Achieved accessiblity 100% by modifying the layout of the color palette.
 
+While starting to implement Redux, thought that a more interesting option would have been injecting the fetched data to the graphql data layer via a custom plugin, but redux would be a good exerise of implementation. Could do both in the future?
+
 _Have another more specific idea? You may want to check out our vibrant collection of [official and community-created starters](https://www.gatsbyjs.com/docs/gatsby-starters/)._
 
 ## 🚀 Quick start
