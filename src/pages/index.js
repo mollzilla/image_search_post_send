@@ -11,7 +11,7 @@ const IndexPage = () => (
     <h1>Welcome to my Athonet Image Search Challenge</h1>
     <p>It's not really my challenge. It's my attempt at solving the challenge.</p>
     {/* TODO set static image */}
-      <Link to="/page-2/">Go to page 2</Link> <br />
+      <Link to="/search/">Go to Search layout</Link> <br />
       <a href="/using-typescript/">My Github</a>
   </Layout>
 )

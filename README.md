@@ -13,6 +13,8 @@ At this point I'm going to enumerate the steps and elaborate once the code is mo
 
 I am going to lay out the UI and then add the functionality since that is the process I was taught during my training.
 
+First going to set layout, then apply styled components
+
 _Have another more specific idea? You may want to check out our vibrant collection of [official and community-created starters](https://www.gatsbyjs.com/docs/gatsby-starters/)._
 
 ## 🚀 Quick start
