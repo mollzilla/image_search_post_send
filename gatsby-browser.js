@@ -1,7 +1,32 @@
-/**
- * Implement Gatsby's Browser APIs in this file.
- *
- * See: https://www.gatsbyjs.com/docs/browser-apis/
- */
+import React from "react"
+import { createGlobalStyle } from "styled-components"
 
-// You can delete this file if you're not using it
+// provider
+
+const GlobalStyle = createGlobalStyle`
+
+  :root {
+    --blue: #1e90ff;
+    --white: #ffffff;
+  }
+
+  body {
+    background-color: yellow;
+  }
+  
+  h1,  h2, h3, h4, h5, h6 {
+    color: var(--blue);//"#FAFAFA";
+    color: red;
+  }
+  header {
+    background-image: linear-gradient(to right, red , yellow);
+  }
+`
+export const wrapRootELement = ({ element }) => {
+  return (
+    <>
+      <GlobalStyle />
+      {element}
+    </>
+  )
+}
