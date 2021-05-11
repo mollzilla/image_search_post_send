@@ -5,8 +5,6 @@ import { Link } from "gatsby"
 
 const SearchContainer = () => (
   <>
-    <h1>Hello from search container</h1>
-
     <SearchBar />
     <ResultsGrid />
   </>

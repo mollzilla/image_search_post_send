@@ -1,57 +1,49 @@
 import * as React from "react"
 import PropTypes from "prop-types"
 import { Link } from "gatsby"
-
-const headerStyle = {
-  backgroundColor: "#E0485D",
-  color: "#000",
-  display: "flex",
-  flexDirection: "column",
-}
-
-const linkStyle = {
-  color: "#FAFAFA",
-  fontSize: "2rem",
-  textDecoration: "none",
-  lineHeight: "2rem",
-}
-
-const ulStyle = {
-  listStyle: "none",
-}
+import styled from "styled-components"
 
 const Header = ({ siteTitle }) => (
-  <header style={headerStyle}>
-    <div
-      style={{
-        margin: `0 auto`,
-        maxWidth: 960,
-        padding: `1.45rem 1.0875rem`,
-        justifyContent: "space-between",
-      }}
-    >
-      <h1 style={{ margin: 0 }}>
-        <Link to="/" style={linkStyle}>
-          {siteTitle}
-        </Link>
-      </h1>
+  <HeaderStyle>
+    <h1 style={{ margin: 0 }}>
+      <Link to="/">{siteTitle}</Link>
+    </h1>
 
-      <nav style={{ width: "60%" }}>
-        <ul style={ulStyle}>
-          <li style={{ margin: 0 }}>
-            <Link to="/search" style={linkStyle}>
-              Search!
-            </Link>
-          </li>
-          <li style={{ margin: 0 }}>
-            <Link to="/404" style={linkStyle}>
-              About
-            </Link>
-          </li>
-        </ul>
-      </nav>
-    </div>
-  </header>
+    <nav style={{ width: "60%" }}>
+      <ul>
+        <li style={{ margin: 0 }}>
+          <Link to="/search">Search!</Link>
+        </li>
+        <li style={{ margin: 0 }}>
+          <Link to="/404">About</Link>
+        </li>
+      </ul>
+    </nav>
+  </HeaderStyle>
 )
 
 export default Header
+
+const HeaderStyle = styled.header`
+  padding: 10px;
+  background: RGB(255,101,80);
+
+  ul {
+    margin-top: 25px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 50px;
+  }
+  a {
+    text-decoration: none;
+    color: #fafafa;
+    font-size: 1.5rem;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+      Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+    font-weight: bold;
+  }
+  li {
+    list-style: none;
+  }
+`

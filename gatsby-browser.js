@@ -3,6 +3,14 @@ import { createGlobalStyle } from "styled-components"
 
 // provider
 
+// https://graphicmama.com/blog/website-color-schemes/
+
+//#E04485D RGB(255,101,80)
+//#322885 RGB(50,40,133)
+//#FCE000
+//#4CAA2B
+//#AECF80
+
 const GlobalStyle = createGlobalStyle`
 
   :root {
@@ -13,7 +21,7 @@ const GlobalStyle = createGlobalStyle`
   body {
     background-color: yellow;
   }
-  
+
   h1,  h2, h3, h4, h5, h6 {
     color: var(--blue);//"#FAFAFA";
     color: red;
