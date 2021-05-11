@@ -26,13 +26,7 @@ const Layout = ({ children }) => {
   return (
     <>
       <Header siteTitle={data.site.siteMetadata?.title || `Title`} />
-      <div
-        style={{
-          margin: `0 auto`,
-          maxWidth: 960,
-          padding: `0 1.0875rem 1.45rem`,
-        }}
-      >
+      <div style={{ backgroundColor: "#AECF8080" }}>
         <main>{children}</main>
         <footer
           style={{
@@ -43,7 +37,9 @@ const Layout = ({ children }) => {
           {` `}
           <a href="https://github.com/mollzilla">Gatsby by Mollzilla.</a>
           <br />
-          <a href="https://github.com/mollzilla">Find out why they call me Mollzilla.</a>
+          <a href="https://github.com/mollzilla">
+            Find out why they call me Mollzilla.
+          </a>
         </footer>
       </div>
     </>

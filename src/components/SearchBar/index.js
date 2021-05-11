@@ -19,13 +19,13 @@ export default SearchBar
 
 const SearchForm = styled.form`
 
-  padding: 40px 2%;
-  width: 300px;
+  padding: 40px 1%;
+  width: 90%;
   color: #FAFAFA;
   margin: 0 auto;
 
   button {
-    background: #4CAA2B;
+    background: #322885;
     border: none;
     padding: 5px 15px;
     border-radius: 0 10px 10px 0;
@@ -33,7 +33,7 @@ const SearchForm = styled.form`
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   }
   input {
-    border: 2px solid #4CAA2B;
+    border: 2px solid #322885;
     padding: 3px;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     width: 75%;

@@ -5,12 +5,12 @@ const ResultsGrid = () => (
   <>
     <h1>Showing 20 results</h1>
     <Grid >
-      <img src="https://place-puppy.com/300x300" />
-      <img src="https://place-puppy.com/300x300" />
-      <img src="https://place-puppy.com/300x300" />
-      <img src="https://place-puppy.com/300x300" />
-      <img src="https://place-puppy.com/300x300" />
-      <img src="https://place-puppy.com/300x300" />
+      <img src="https://place-puppy.com/300x300" alt="search result" />
+      <img src="https://place-puppy.com/300x300" alt="search result" />
+      <img src="https://place-puppy.com/300x300" alt="search result" />
+      <img src="https://place-puppy.com/300x300" alt="search result" />
+      <img src="https://place-puppy.com/300x300" alt="search result" />
+      <img src="https://place-puppy.com/300x300" alt="search result" />
     </Grid>
   </>
 )

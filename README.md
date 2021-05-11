@@ -13,7 +13,19 @@ At this point I'm going to enumerate the steps and elaborate once the code is mo
 
 I am going to lay out the UI and then add the functionality since that is the process I was taught during my training.
 
-First going to set layout, then apply styled components
+First going to set layout, then apply styled components.
+
+Styled components proved quite a challenge. Wanted to add global styles but that might be a bit too much for now.
+
+I know I said I'd finish the style first, but decided to add functionality and take advantage of the boost of the complete task to renew my motivation for achieving the best looks.
+
+Palette was chosen from a designer's blog but it's becoming apparent I might not have the best eye for colors...
+
+Achieved style compatible with small mobiles, which are not required in today's standards but it's a plus considering the amount of old devices in circulation nowadays.
+
+Hamburger will be revisited later as well.
+
+Achieved accessiblity 100% by modifying the layout of the color palette.
 
 _Have another more specific idea? You may want to check out our vibrant collection of [official and community-created starters](https://www.gatsbyjs.com/docs/gatsby-starters/)._
 

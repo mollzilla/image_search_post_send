@@ -11,6 +11,8 @@ import { createGlobalStyle } from "styled-components"
 //#4CAA2B
 //#AECF80
 
+/* for now, global styles might be a bit out of my reach. Maybe style separately and tackle the functionality, and maybe revisit this subject later. */
+
 const GlobalStyle = createGlobalStyle`
 
   :root {

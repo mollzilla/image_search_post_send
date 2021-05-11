@@ -1,5 +1,4 @@
 import * as React from "react"
-import PropTypes from "prop-types"
 import { Link } from "gatsby"
 import styled from "styled-components"
 
@@ -26,7 +25,7 @@ export default Header
 
 const HeaderStyle = styled.header`
   padding: 10px;
-  background: RGB(255,101,80);
+  background: #322885;
 
   ul {
     margin-top: 25px;
