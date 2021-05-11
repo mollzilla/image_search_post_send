@@ -5,25 +5,25 @@
   </a>
 </p>
 <h1 align="center">
-  Gatsby's default starter
+  Mili's Athonet image search Challenge
 </h1>
 
-Kick off your project with this default boilerplate. This starter ships with the main Gatsby configuration files you might need to get up and running blazing fast with the blazing fast app generator for React.
+This code is going to pose several challenges considering my tech stack and I'm ready and excited about embarking on the process.
+At this point I'm going to enumerate the steps and elaborate once the code is more rounded up.
+
+I am going to lay out the UI and then add the functionality since that is the process I was taught during my training.
 
 _Have another more specific idea? You may want to check out our vibrant collection of [official and community-created starters](https://www.gatsbyjs.com/docs/gatsby-starters/)._
 
 ## 🚀 Quick start
 
 1.  **Create a Gatsby site.**
+  This is using the default bolier plate
+2.  **Remove unused files and creating first alias**
+  Run gatsby clean to clear cached images on static queries.
+    
 
-    Use the Gatsby CLI to create a new site, specifying the default starter.
-
-    ```shell
-    # create a new Gatsby site using the default starter
-    gatsby new my-default-starter https://github.com/gatsbyjs/gatsby-starter-default
-    ```
-
-1.  **Start developing.**
+99.  **Start developing.**
 
     Navigate into your new site’s directory and start it up.
 
@@ -32,7 +32,7 @@ _Have another more specific idea? You may want to check out our vibrant collecti
     gatsby develop
     ```
 
-1.  **Open the source code and start editing!**
+100.  **Open the source code and start editing!**
 
     Your site is now running at `http://localhost:8000`!
 
@@ -102,4 +102,4 @@ Looking for more guidance? Full documentation for Gatsby lives [on the website](
 
 Gatsby Cloud is an end-to-end cloud platform specifically built for the Gatsby framework that combines a modern developer experience with an optimized, global edge network.
 
-<!-- AUTO-GENERATED-CONTENT:END -->
+AUTO-GENERATED-CONTENT:END
