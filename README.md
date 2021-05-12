@@ -37,6 +37,10 @@ Contemplated images coming from galleries
 
 want to get rid of the ugly 404 message when there is not an existent subreddit
 
+Used another filter to add subreddits according to key letters instead of keywords and therefore broaden the search, and thus preventing 404 for inexistent subreddits.
+
+Finally decided to use thumbnails due to the amount of results
+
 _Have another more specific idea? You may want to check out our vibrant collection of [official and community-created starters](https://www.gatsbyjs.com/docs/gatsby-starters/)._
 
 ## 🚀 Quick start

@@ -17,7 +17,7 @@ const Header = ({results, siteTitle}) => {
           <Link to="/search">Search!</Link>
         </li>
         <li style={{ margin: 0 }}>
-          <Link to="/404">About</Link>
+          <a href="github.com/mollzilla" to="/404">About</a>
         </li>
       </ul>
     </nav>

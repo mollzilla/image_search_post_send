@@ -8,38 +8,43 @@ import styled from "styled-components"
 const SearchContainer = () => {
   const [results, setResults] = useState([])
   const [keywords, setkeywords] = useState("")
-  const [subreddits, setSubreddits] = useState("")
-  const [mili, setMili] = useState([]);
 
   const getKeywords = e => {
     setkeywords(e)
   }
 
   useEffect(() => {
+    
     const getImages = async () => {
-      try {      
 
-        const subreddits = await axios.get(
+    let subreddits = {};
+    let subredditKeywords = [];
+
+      try {
+        subreddits = await axios.get(
           `https://www.reddit.com/subreddits/search.json?q=${keywords}`
         )
 
-        // const results = await axios.get(
-        //   `https://www.reddit.com/r/${keywords}/top.json`
-        // )
+        if(subreddits?.data?.data?.children) {
+          subredditKeywords = subreddits.data.data.children.map(
+            subreddit => subreddit.data.display_name
+          )
+        } 
 
-        const subredditKeywords = subreddits.data.data.children.map(subreddit=> subreddit.data.display_name);
-
-        const images =  await Promise.all(subredditKeywords.map(keyword => axios.get(
-          `https://www.reddit.com/r/${keyword}/top.json`
-        )))
-        .then(images => images.map(image => Utils.normalizeImages(image?.data?.data?.children.slice(0,50))))
-        .then(mili => setMili(mili.flat(1)))
-
-        // const resultsArray = results?.data?.data?.children
-        // setResults(Utils.normalizeImages(resultsArray))
-        setSubreddits(subreddits.data.data.children.map(subreddit=> subreddit.data.display_name))
+        await Promise.all(
+          subredditKeywords.map(keyword =>
+            axios.get(`https://www.reddit.com/r/${keyword}/top.json`)
+          )
+        )
+          .then(images =>
+            images.map(image =>
+              Utils.normalizeImages(image?.data?.data?.children.slice(0, 50))
+            )
+          )
+          .then(results => setResults(results.flat(1)))
       } catch (err) {
         console.log(err)
+        alert("Sorry, there has been an error")
       }
     }
 
@@ -49,10 +54,7 @@ const SearchContainer = () => {
   return (
     <Container>
       <SearchBar getKeywords={getKeywords} />
-      {/* <pre>{JSON.stringify(subreddits,null,2)}</pre> */}
-      <pre>{JSON.stringify(mili,null,2)}</pre>
-
-      <ResultsGrid results={mili} />
+      <ResultsGrid results={results} />
     </Container>
   )
 }
@@ -68,4 +70,5 @@ export default SearchContainer
 const Container = styled.div`
   max-width: 1240px;
   margin: 0 auto;
+
 `
