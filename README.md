@@ -29,6 +29,12 @@ Achieved accessiblity 100% by modifying the layout of the color palette.
 
 While starting to implement Redux, thought that a more interesting option would have been injecting the fetched data to the graphql data layer via a custom plugin, but redux would be a good exerise of implementation. Could do both in the future?
 
+Before setting up Redux, decided to test API. Proved a good idea since the data returned was intrincate. Had to use a regular expression to bypass a legacy encoded &.
+
+Undecided on using thumbnail or url, since thumbnail won't display the gif, but image will have trouble adjusting to style.
+
+Contemplated images coming from galleries
+
 _Have another more specific idea? You may want to check out our vibrant collection of [official and community-created starters](https://www.gatsbyjs.com/docs/gatsby-starters/)._
 
 ## 🚀 Quick start
