@@ -18,7 +18,7 @@ const SearchBar = ({ getKeywords }) => {
         onChange={e => onKeywordChange(e)}
         value={keywords}
       ></input>
-      <button> onClick={e => onKeywordChange} Hit it!</button>{" "}
+      <button onClick={e => e.preventDefault()}>Hit it!</button>{" "}
       {/* According to assignment not necessary but for UI purposes will include it */}
     </SearchForm>
   );
@@ -34,7 +34,7 @@ export default SearchBar;
 
 const SearchForm = styled.form`
   padding: 40px 1%;
-  width: 90%;
+  width: 100%;
   color: #fafafa;
   margin: 0 auto;
 
@@ -46,6 +46,7 @@ const SearchForm = styled.form`
     color: #fafafa;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
       Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+      width: 25%;
   }
   input {
     border: 2px solid #322885;
@@ -55,7 +56,7 @@ const SearchForm = styled.form`
     width: 75%;
   }
 
-  @media (min-width: 768px) {
+  @media (min-width: 650px) {
     width: 600px;
   }
 `;

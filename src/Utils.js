@@ -19,8 +19,6 @@ export default class Utils {
             url.match(/^(?!.*(default|self|nsfw|spoiler)).*$/) && url !== ""
         );
 
-    console.log(imagesUrl.filter(string => string !== ""));
-    console.log(metadataImages);
     return [...imagesUrl, ...metadataImages];
   }
 }

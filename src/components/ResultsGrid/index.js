@@ -1,7 +1,53 @@
-import * as React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
 const ResultsGrid = ({ results }) => {
+  const [offset, setOffset] = useState(0);
+  const [viewportItems, setViewportItems] = useState()
+
+  const getVh = () => {
+    const vh = Math.max(
+      document.documentElement.clientHeight || 0,
+      window.innerHeight || 0
+    );
+
+    const vw = window.innerWidth;
+    const position = document.documentElement.scrollTop;
+    // console.log(vh, vw, position);
+
+
+    /* 165 is grid item height */
+    let rows = Math.ceil(vh/165)
+
+    let rowItems;
+    let viewportItems;
+
+    /* switch deemed inadequate for variable comparison */
+    if (vw > 1240) rowItems = 6;
+    else if (vw > 1024) rowItems = 4;
+    else if (vw > 768) rowItems = 3;
+    else rowItems = 2;
+
+    viewportItems = rowItems*rows;
+
+    console.log(rowItems, viewportItems, position)
+
+    return [viewportItems, position]
+  };
+
+  useEffect(() => {
+
+    setViewportItems(getVh()[0])
+
+    window.addEventListener("resize", getVh);
+    window.addEventListener("scroll", getVh);
+
+    return () => {
+      window.removeEventListener("resize");
+      window.removeEventListener("scroll");
+    };
+  }, []);
+
   return (
     <>
       <h1 style={{ textAlign: "center" }}>
@@ -33,21 +79,25 @@ const Grid = styled.section`
 
   padding: 32px;
   display: grid;
-  grid-template: 1fr / 1fr 1fr;
+  grid-template-rows: (minmax(1fr, 140px));
+  grid-template-columns: 1fr 1fr;
   grid-gap: 25px;
   justify-content: center;
 
   @media (min-width: 768px) {
     padding: 32px 64px;
-    grid-template: 1fr / Repeat(4, 1fr);
+    grid-template-columns: Repeat(3, 1fr);
   }
 
   @media (min-width: 1024px) {
-    padding: 32px 128px;
-    grid-template: 1fr / Repeat(6, 1fr);
+    padding: 32px 64px;
+    grid-template-columns: Repeat(4, 1fr);
   }
 
+
   @media (min-width: 1240px) {
-    grid-template: 1fr / Repeat(8, 1fr);
+    padding: 32px 128px;
+    grid-template-columns: Repeat(6, 1fr);
   }
+
 `;
