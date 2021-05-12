@@ -1,8 +1,6 @@
-import React, { useState, useEffect } from "react"
+import React from "react"
 import PropTypes from "prop-types"
 import { useStaticQuery, graphql } from "gatsby"
-import normalizeImages from "@utils/normalizeImages";
-import axios from "axios"
 import Header from "./header"
 import Footer from "./footer"
 import "./layout.css"
@@ -20,39 +18,10 @@ const Layout = ({ children }) => {
     }
   `)
 
-  const [results, setResults] = useState()
-
-  useEffect(() => {
-
-    const getImages = async () => {
-      const results = await axios.get(
-        "https://www.reddit.com/r/pepe/top.json"
-      )
-
-      const resultsArray = results?.data?.data?.children
-      setResults(normalizeImages(resultsArray))
-      
-    }
-
-    getImages();
-  }, [])
-
   return (
     <>
       <Header siteTitle={data.site.siteMetadata?.title || `Title`} />
       <main style={{ backgroundColor: "#AECF8080" }}>{children}</main>
-    
-
-      <div>
-        {results?.length > 0 &&
-          results?.map(result => (
-            <>
-              <img src={result?.replace(/amp;/g, "")} style={{width: "150px"}} />
-            </>
-          ))}
-      </div>
-
-
       <Footer />
     </>
   )

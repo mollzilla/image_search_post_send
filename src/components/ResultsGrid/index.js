@@ -1,23 +1,20 @@
 import * as React from "react"
 import styled from "styled-components"
 
-const ResultsGrid = (props) => {
-  
-  console.log(props);
-  
+const ResultsGrid = ({ results }) => {
+  console.log(results)
+
   return (
-  <>
-    <h1>Showing 20 results</h1>
-    <Grid >
-      <img src="https://place-puppy.com/300x300" alt="search result" />
-      <img src="https://place-puppy.com/300x300" alt="search result" />
-      <img src="https://place-puppy.com/300x300" alt="search result" />
-      <img src="https://place-puppy.com/300x300" alt="search result" />
-      <img src="https://place-puppy.com/300x300" alt="search result" />
-      <img src="https://place-puppy.com/300x300" alt="search result" />
-    </Grid>
-  </>
-)}
+    <>
+      <h1>Showing 20 results</h1>
+      <Grid>
+        {results.map(result => (
+          <img src={result?.replace(/amp;/g, "")} alt="search result" />
+        ))}
+      </Grid>
+    </>
+  )
+}
 
 export default ResultsGrid
 
@@ -28,7 +25,6 @@ export default ResultsGrid
 //#AECF80
 
 const Grid = styled.section`
-
   img {
     margin: 0 auto;
   }
@@ -37,18 +33,18 @@ const Grid = styled.section`
   grid-template-columns: 1fr;
   grid-gap: 25px;
 
-  @media(min-width: 768px) {
+  @media (min-width: 768px) {
     grid-template: 1fr / 1fr 1fr;
     justify-content: center;
   }
 
-  @media(min-width: 1024px) {
+  @media (min-width: 1024px) {
     grid-template: 1fr / 1fr 1fr 1fr;
-    justify-content: center
+    justify-content: center;
   }
 
-  @media(min-width: 1240px) {
+  @media (min-width: 1240px) {
     grid-template: 1fr / 1fr 1fr 1fr 1fr;
-    justify-content: center
+    justify-content: center;
   }
 `

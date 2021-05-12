@@ -4,7 +4,7 @@ import styled from "styled-components"
 
 const Header = ({results, siteTitle}) => {
   
-  console.log(results)
+
   return (
   <HeaderStyle>
     <h1 style={{ margin: 0 }}>

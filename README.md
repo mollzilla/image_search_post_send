@@ -35,6 +35,8 @@ Undecided on using thumbnail or url, since thumbnail won't display the gif, but 
 
 Contemplated images coming from galleries
 
+want to get rid of the ugly 404 message when there is not an existent subreddit
+
 _Have another more specific idea? You may want to check out our vibrant collection of [official and community-created starters](https://www.gatsbyjs.com/docs/gatsby-starters/)._
 
 ## 🚀 Quick start
