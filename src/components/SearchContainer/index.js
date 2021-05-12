@@ -32,10 +32,9 @@ const SearchContainer = () => {
         const images =  await Promise.all(subredditKeywords.map(keyword => axios.get(
           `https://www.reddit.com/r/${keyword}/top.json`
         )))
-        .then(images => images.map(image => Utils.normalizeImages(image?.data?.data?.children)))
+        .then(images => images.map(image => Utils.normalizeImages(image?.data?.data?.children.slice(0,50))))
         .then(mili => setMili(mili.flat(1)))
 
-        console.log(images)
         // const resultsArray = results?.data?.data?.children
         // setResults(Utils.normalizeImages(resultsArray))
         setSubreddits(subreddits.data.data.children.map(subreddit=> subreddit.data.display_name))

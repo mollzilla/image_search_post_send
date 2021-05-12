@@ -3,13 +3,15 @@ export default class Utils {
 
     
     /* NOTICE there may be other exeptions not yet contemplated. For now, gallery images and images direct links contemplated */
-  
     const imagesObject = resultsArr?.map(child => child?.data?.media_metadata)[0];
-    const imagesUrl = resultsArr?.map(child => child?.data?.url).filter(url => !url.includes("comments") && !url.includes("gallery") && !url.includes("v.redd") && !url.includes("youtu.be"));
+    const imagesUrl = resultsArr?.map(child => child?.data?.thumbnail).filter(url => url.match(/^(?!.*(default|self|nsfw|spoiler)).*$/) && url!="");
   
     let metadataImages = [];
-    if(imagesObject) metadataImages = (Object.keys(imagesObject).map(key => imagesObject[key].p[2].u)).filter(url => !url.includes("gallery"));
+    if(imagesObject) metadataImages = (Object.keys(imagesObject).map(key => imagesObject[key].p[1].u)).filter(url => url.match(/^(?!.*(default|self|nsfw|spoiler)).*$/) && url!="");
   
+
+    console.log(imagesUrl.slice(0,50).filter(string => string!=""))
+    console.log(metadataImages.slice(0,50))
     return ([...imagesUrl, ...metadataImages])
   }
 }
