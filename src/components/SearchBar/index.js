@@ -1,28 +1,28 @@
-import React, { useState } from "react"
+import React, { useState } from "react";
 
-import styled from "styled-components"
+import styled from "styled-components";
 
 const SearchBar = ({ getKeywords }) => {
-  const [keywords, setKeywords] = useState("")
+  const [keywords, setKeywords] = useState("");
 
   const onKeywordChange = e => {
-    getKeywords(e.target.value)
-    setKeywords(e.target.value)
-  }
+    getKeywords(e.target.value);
+    setKeywords(e.target.value);
+  };
 
   return (
     <SearchForm>
       <input
         type="text"
         placeholder="Find it!"
-        onChange={(e) => onKeywordChange(e)}
+        onChange={e => onKeywordChange(e)}
         value={keywords}
       ></input>
-      <button>Hit it!</button>{" "}
+      <button> onClick={e => onKeywordChange} Hit it!</button>{" "}
       {/* According to assignment not necessary but for UI purposes will include it */}
     </SearchForm>
-  )
-}
+  );
+};
 
 //#E04485D
 //#322885
@@ -30,7 +30,7 @@ const SearchBar = ({ getKeywords }) => {
 //#4CAA2B
 //#AECF80
 
-export default SearchBar
+export default SearchBar;
 
 const SearchForm = styled.form`
   padding: 40px 1%;
@@ -58,4 +58,4 @@ const SearchForm = styled.form`
   @media (min-width: 768px) {
     width: 600px;
   }
-`
+`;

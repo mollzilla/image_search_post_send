@@ -1,30 +1,31 @@
-import * as React from "react"
-import { Link } from "gatsby"
-import styled from "styled-components"
+import * as React from "react";
+import { Link } from "gatsby";
+import styled from "styled-components";
 
-const Header = ({results, siteTitle}) => {
-  
-
+const Header = ({ results, siteTitle }) => {
   return (
-  <HeaderStyle>
-    <h1 style={{ margin: 0 }}>
-      <Link to="/">{siteTitle}</Link>
-    </h1>
+    <HeaderStyle>
+      <h1 style={{ margin: 0 }}>
+        <Link to="/">{siteTitle}</Link>
+      </h1>
 
-    <nav style={{ width: "60%" }}>
-      <ul>
-        <li style={{ margin: 0 }}>
-          <Link to="/search">Search!</Link>
-        </li>
-        <li style={{ margin: 0 }}>
-          <a href="github.com/mollzilla" to="/404">About</a>
-        </li>
-      </ul>
-    </nav>
-  </HeaderStyle>
-)}
+      <nav style={{ width: "60%" }}>
+        <ul>
+          <li style={{ margin: 0 }}>
+            <Link to="/search">Search!</Link>
+          </li>
+          <li style={{ margin: 0 }}>
+            <a href="https://github.com/mollzilla" to="/404">
+              About
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </HeaderStyle>
+  );
+};
 
-export default Header
+export default Header;
 
 const HeaderStyle = styled.header`
   padding: 10px;
@@ -48,4 +49,4 @@ const HeaderStyle = styled.header`
   li {
     list-style: none;
   }
-`
+`;
