@@ -96,6 +96,11 @@ export default ResultsGrid;
 const Grid = styled.section`
   /* Prevent vertical gaps */
   line-height: 0;
+
+  /* -webkit-column-count: 5;
+  -webkit-column-gap: 0px;
+  -moz-column-count: 5;
+  -moz-column-gap: 0px; */
   column-count: 5;
   column-gap: 0px;
 
