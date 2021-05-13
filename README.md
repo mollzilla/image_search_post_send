@@ -59,6 +59,8 @@ Followed a tutorial which familiarized me with the useCallback hook, which allow
 
 Soon realized scalability and readability would not be possible without a provider. Decided that would implement pagination successfully before moving data to provider in order to pinpoint the how and what to be stored and passed down.
 
+Once pagination was understood, applied and finally debugged, added some masonry to the looks and started to think about the structure of a provider and additional data that may be added
+
 _Have another more specific idea? You may want to check out our vibrant collection of [official and community-created starters](https://www.gatsbyjs.com/docs/gatsby-starters/)._
 
 ## 🚀 Quick start

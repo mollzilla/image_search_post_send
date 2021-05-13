@@ -50,7 +50,7 @@ function ImgSearch(keywords) {
           .filter(url => url.match(/(i.redd|jpg|gif|imgur|jpeg|png)/));
 
         setImages(prevImages => {
-          return [...prevImages, ...newImages];
+          return [...new Set([...prevImages, ...newImages])];
         });
 
         setResults(newResults);

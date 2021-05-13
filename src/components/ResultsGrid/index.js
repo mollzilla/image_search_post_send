@@ -1,7 +1,13 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import styled from "styled-components";
 
-const ResultsGrid = ({ results, loading, after, incrementPagination, children }) => {
+const ResultsGrid = ({
+  results,
+  loading,
+  after,
+  incrementPagination,
+  children
+}) => {
   const [offset, setOffset] = useState(1);
   const [viewportItems, setViewportItems] = useState(1);
   const [vh, setVh] = useState(0);
@@ -88,7 +94,33 @@ export default ResultsGrid;
 //#AECF80
 
 const Grid = styled.section`
+  /* Prevent vertical gaps */
+  line-height: 0;
+  column-count: 5;
+  column-gap: 0px;
+
   img {
+    /* Just in case there are inline attributes */
+    width: 100% !important;
+    height: auto !important;
+    margin: 0 !important;
+  }
+
+  @media (max-width: 1200px) {
+    column-count: 4;
+  }
+  @media (max-width: 1000px) {
+    column-count: 3;
+  }
+  @media (max-width: 800px) {
+    column-count: 2;
+  }
+  @media (max-width: 400px) {
+    column-count: 1;
+  }
+`;
+
+/* img {
     margin: 0 auto;
   }
 
@@ -112,14 +144,13 @@ const Grid = styled.section`
   @media (min-width: 1024px) {
     padding: 32px 64px;
     grid-template-columns: Repeat(6, 1fr);
-  }
+  } */
 
-  /* 
+/* 
   @media (min-width: 1240px) {
     padding: 32px 128px;
     grid-template-columns: Repeat(7, 1fr);
   } */
-`;
 
 // const getVh = () => {
 //   const vh = Math.max(
