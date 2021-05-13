@@ -4,54 +4,29 @@ import ResultsGrid from "@components/ResultsGrid";
 import Utils from "../../Utils.js";
 import axios from "axios";
 import styled from "styled-components";
+import ImgSearch from "@hooks/ImgSearch";
+
 
 const SearchContainer = () => {
-  const [results, setResults] = useState([]);
   const [keywords, setkeywords] = useState("");
 
   const getKeywords = e => {
     setkeywords(e);
   };
 
-  useEffect(() => {
-    const getImages = async () => {
-      let subreddits = {};
-      let subredditKeywords = [];
+const {
+  results,
+  loading,
+  error
+} = ImgSearch(keywords);
 
-      try {
-        subreddits = await axios.get(
-          `https://www.reddit.com/subreddits/search.json?q=${keywords}`
-        );
-
-        if (subreddits?.data?.data?.children) {
-          subredditKeywords = subreddits.data.data.children.map(
-            subreddit => subreddit.data.display_name
-          );
-        }
-
-        await Promise.all(
-          subredditKeywords.map(keyword =>
-            axios.get(`https://www.reddit.com/r/${keyword}/top.json`)
-          )
-        )
-          .then(images =>
-            images.map(image =>
-              Utils.normalizeImages(image?.data?.data?.children.slice(0, 50))
-            )
-          )
-          .then(results => setResults(results.flat(1)));
-      } catch (err) {
-        console.log(err);
-        alert("Sorry, there has been an error");
-      }
-    };
-
-    getImages();
-  }, [keywords]);
-
+console.log(ImgSearch(keywords))
   return (
     <Container>
       <SearchBar getKeywords={getKeywords} />
+      {/* {results.map(image => <p>{image}</p>)} */}
+      {/* {loading && <p>Loading...</p>} */}
+      {/* {error && <p>Error</p>} */}
       <ResultsGrid results={results} />
     </Container>
   );

@@ -39,7 +39,15 @@ want to get rid of the ugly 404 message when there is not an existent subreddit
 
 Used another filter to add subreddits according to key letters instead of keywords and therefore broaden the search, and thus preventing 404 for inexistent subreddits.
 
-Finally decided to use thumbnails due to the amount of results
+Considered axios CancelToken but decided against it to follow exactly the guideline of updating search as the user types.
+
+Finally decided to use thumbnails due to the amount of results. Will calculate number of items and screen height to slice the thumbnail array accordingly
+
+Decided to attempt to create my own lazy loading paginator
+
+Previous attempt at pagination was overly complicated because of consideration of both screen height and screen width to decide offset and number of elements. Furthermore, it had its own calculation of viewport height offset instead of intersection observer. Researched some more.
+
+Moved the fetch logic into custom hook and added loading and error variables
 
 _Have another more specific idea? You may want to check out our vibrant collection of [official and community-created starters](https://www.gatsbyjs.com/docs/gatsby-starters/)._
 

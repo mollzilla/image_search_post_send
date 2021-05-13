@@ -2,51 +2,11 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
 const ResultsGrid = ({ results }) => {
-  const [offset, setOffset] = useState(0);
-  const [viewportItems, setViewportItems] = useState()
+  const [offset, setOffset] = useState(1);
+  const [viewportItems, setViewportItems] = useState(1);
+  const [vh, setVh] = useState(0)
 
-  const getVh = () => {
-    const vh = Math.max(
-      document.documentElement.clientHeight || 0,
-      window.innerHeight || 0
-    );
-
-    const vw = window.innerWidth;
-    const position = document.documentElement.scrollTop;
-    // console.log(vh, vw, position);
-
-
-    /* 165 is grid item height */
-    let rows = Math.ceil(vh/165)
-
-    let rowItems;
-    let viewportItems;
-
-    /* switch deemed inadequate for variable comparison */
-    if (vw > 1240) rowItems = 6;
-    else if (vw > 1024) rowItems = 4;
-    else if (vw > 768) rowItems = 3;
-    else rowItems = 2;
-
-    viewportItems = rowItems*rows;
-
-    console.log(rowItems, viewportItems, position)
-
-    return [viewportItems, position]
-  };
-
-  useEffect(() => {
-
-    setViewportItems(getVh()[0])
-
-    window.addEventListener("resize", getVh);
-    window.addEventListener("scroll", getVh);
-
-    return () => {
-      window.removeEventListener("resize");
-      window.removeEventListener("scroll");
-    };
-  }, []);
+  const [ visibleResults, setVisibleResults ] = useState([...results].slice(0,60));
 
   return (
     <>
@@ -56,8 +16,8 @@ const ResultsGrid = ({ results }) => {
           : "No results to show"}
       </h1>
       <Grid>
-        {results.map(result => (
-          <img src={result?.replace(/amp;/g, "")} alt="search result" />
+        {results.map((result, i) => (
+          <img src={result?.replace(/amp;/g, "")} alt="search result" key={i} />
         ))}
       </Grid>
     </>
@@ -101,3 +61,52 @@ const Grid = styled.section`
   }
 
 `;
+
+
+
+// const getVh = () => {
+//   const vh = Math.max(
+//     document.documentElement.clientHeight || 0,
+//     window.innerHeight || 0
+//   );
+
+//   const vw = window.innerWidth;
+//   const position = document.documentElement.scrollTop+window.innerHeight;
+
+//   /* 165 is grid item height */
+//   let rows = Math.ceil(vh/165)
+
+//   let rowItems;
+//   let viewportItems;
+
+//   /* switch deemed inadequate for variable comparison */
+//   if (vw > 1240) rowItems = 6;
+//   else if (vw > 1024) rowItems = 4;
+//   else if (vw > 768) rowItems = 3;
+//   else rowItems = 2;
+
+//   viewportItems = rowItems*rows;
+
+//   // console.log(rowItems, viewportItems, position)
+
+//   console.log(position-vh*offset)
+
+//   if(position-vh*offset>rows)
+//     setOffset(offset*viewportItems)
+
+
+//   return [viewportItems, position]
+// };
+
+// useEffect(() => {
+
+//   setViewportItems(getVh()[0])
+
+//   window.addEventListener("resize", getVh);
+//   window.addEventListener("scroll", getVh);
+
+//   return () => {
+//     window.removeEventListener("resize");
+//     window.removeEventListener("scroll");
+//   };
+// }, []);
