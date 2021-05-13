@@ -6,12 +6,12 @@ export default class Utils {
     )[0];
 
  /* in case of image thumbnails, elements like tags might be returned, or even empty images, therefore they have been filtered with a regexp */
-    const imagesThumbnail = resultsArr
-      ?.map(child => child?.data?.thumbnail)
-      .filter(
-        url => url.match(/^(?!.*(default|self|nsfw|spoiler)).*$/) && url !== ""
-      );
-
+    // const imagesThumbnail = resultsArr
+    //   ?.map(child => child?.data?.thumbnail)
+    //   .filter(
+    //     url => url.match(/^(?!.*(default|self|nsfw|spoiler)).*$/) && url !== ""
+    //   );
+const imagesThumbnail = []
       const imagesUrl = resultsArr
       ?.map(child => child?.data?.url)
       .filter(

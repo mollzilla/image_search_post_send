@@ -6,35 +6,37 @@ import axios from "axios";
 import styled from "styled-components";
 import ImgSearch from "@hooks/ImgSearch";
 
-
 const SearchContainer = () => {
   const [keywords, setkeywords] = useState("");
+  const [pagination, setPagination] = useState(1);
 
   const getKeywords = e => {
     setkeywords(e);
+    setPagination(1);
   };
 
-const {
-  results,
-  resultsInfo,
-  after,
-  afterInfo
-  // loading,
-  // error
-} = ImgSearch(keywords);
+  const {
+    results,
+    resultsInfo,
+    after,
+    afterInfo,
+    images,
+    loading,
+    error
+  } = ImgSearch(keywords);
 
   return (
     <Container>
-
       <SearchBar getKeywords={getKeywords} />
-      <pre>{JSON.stringify(results.children.map(child => child.data), null, 4)}</pre>
-      <pre>{JSON.stringify(resultsInfo, null, 1)}</pre>
+      {/* <pre>{JSON.stringify(results?.children?.map(child => child.data), null, 4)}</pre> */}
+      {/* <pre>{JSON.stringify(results, null, 2)}</pre> */}
+      {/* <pre>{JSON.stringify(resultsInfo, null, 1)}</pre> */}
       {/* <pre>{JSON.stringify(after, null, 2)}</pre> */}
-      <pre>{JSON.stringify(afterInfo, null, 1)}</pre>
-      {/* {loading && <p>Loading...</p>} */}
+      {/* <pre>{JSON.stringify(afterInfo, null, 1)}</pre> */}
+      {loading && <p>Loading...</p>}
       {/* {error===403 &&  <p>It seems like some of the matched subreddits are forbidden...</p>} */}
       {/* {error && error!==403 &&  <p>Warning: some of the matching subreddits returned an error. This might be caused by a forbidden subreddit, or an inexistent one. </p>} */}
-      {/* <ResultsGrid results={results} /> */}
+      <ResultsGrid results={images} />
     </Container>
   );
 };
