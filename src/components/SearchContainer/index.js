@@ -16,18 +16,25 @@ const SearchContainer = () => {
 
 const {
   results,
-  loading,
-  error
+  resultsInfo,
+  after,
+  afterInfo
+  // loading,
+  // error
 } = ImgSearch(keywords);
 
-console.log(ImgSearch(keywords))
   return (
     <Container>
+
       <SearchBar getKeywords={getKeywords} />
-      {/* {results.map(image => <p>{image}</p>)} */}
+      <pre>{JSON.stringify(results.children.map(child => child.data), null, 4)}</pre>
+      <pre>{JSON.stringify(resultsInfo, null, 1)}</pre>
+      {/* <pre>{JSON.stringify(after, null, 2)}</pre> */}
+      <pre>{JSON.stringify(afterInfo, null, 1)}</pre>
       {/* {loading && <p>Loading...</p>} */}
-      {/* {error && <p>Error</p>} */}
-      <ResultsGrid results={results} />
+      {/* {error===403 &&  <p>It seems like some of the matched subreddits are forbidden...</p>} */}
+      {/* {error && error!==403 &&  <p>Warning: some of the matching subreddits returned an error. This might be caused by a forbidden subreddit, or an inexistent one. </p>} */}
+      {/* <ResultsGrid results={results} /> */}
     </Container>
   );
 };

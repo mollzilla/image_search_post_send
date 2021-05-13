@@ -44,21 +44,26 @@ const Grid = styled.section`
   grid-gap: 25px;
   justify-content: center;
 
-  @media (min-width: 768px) {
+  @media (min-width: 600px) {
     padding: 32px 64px;
     grid-template-columns: Repeat(3, 1fr);
   }
 
-  @media (min-width: 1024px) {
+  @media (min-width: 768px) {
     padding: 32px 64px;
     grid-template-columns: Repeat(4, 1fr);
   }
 
-
-  @media (min-width: 1240px) {
-    padding: 32px 128px;
+  @media (min-width: 1024px) {
+    padding: 32px 64px;
     grid-template-columns: Repeat(6, 1fr);
   }
+
+/* 
+  @media (min-width: 1240px) {
+    padding: 32px 128px;
+    grid-template-columns: Repeat(7, 1fr);
+  } */
 
 `;
 
