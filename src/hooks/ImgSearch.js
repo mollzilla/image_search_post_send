@@ -11,7 +11,6 @@ function ImgSearch(keywords) {
     setLoading(true);
     setError(false);
 
-    try {
       const subredditsPromise = axios.get(
         `https://www.reddit.com/subreddits/search.json?q=${keywords}`
       );
@@ -31,6 +30,7 @@ function ImgSearch(keywords) {
             );
         })
         .then(allResults => {
+          console.log(allResults[0], allResults[1], allResults[2], allResults[3])
           if (allResults && allResults.length > 0) {
             return allResults.map(result =>
               Utils.normalizeImages(result?.data?.data?.children.slice(0, 50))
@@ -40,12 +40,11 @@ function ImgSearch(keywords) {
         .then(results => {
           if (results && results.length > 0) setResults(results.flat(1));
           setLoading(false);
-        });
-    } catch (err) {
-      console.log(err);
-      setError(true);
-      alert("Sorry, there has been an error");
-    }
+        }).catch(err => {
+          console.log(err)
+
+          setError(true)
+        })
   }, [keywords]);
 
   return { loading, error, results };

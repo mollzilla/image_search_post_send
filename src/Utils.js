@@ -4,6 +4,8 @@ export default class Utils {
     const imagesObject = resultsArr?.map(
       child => child?.data?.media_metadata
     )[0];
+
+ /* in case of image thumbnails, elements like tags might be returned, or even empty images, therefore they have been filtered with a regexp */
     const imagesUrl = resultsArr
       ?.map(child => child?.data?.thumbnail)
       .filter(
@@ -14,10 +16,6 @@ export default class Utils {
     if (imagesObject)
       metadataImages = Object.keys(imagesObject)
         .map(key => imagesObject[key].p[1].u)
-        .filter(
-          url =>
-            url.match(/^(?!.*(default|self|nsfw|spoiler)).*$/) && url !== ""
-        );
 
     return [...imagesUrl, ...metadataImages];
   }

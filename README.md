@@ -47,7 +47,11 @@ Decided to attempt to create my own lazy loading paginator
 
 Previous attempt at pagination was overly complicated because of consideration of both screen height and screen width to decide offset and number of elements. Furthermore, it had its own calculation of viewport height offset instead of intersection observer. Researched some more.
 
-Moved the fetch logic into custom hook and added loading and error variables
+Moved the fetch logic into custom hook and added loading and error variables.
+
+Decided to make pagination depend on a fixed number of results and not a calculation of viewport height, width, position of scroll and number of cards displayed. Instead, results will paginate every n amount of results that deems convenient for all screen sizes.
+
+Unfortunately, after carefully reading the briefing again, it became evident that the pagination was to be done by calling the API, and therefore the complex search including all matching subreddits became virtually impossible to handle. Therefore, modified the query to match only one subreddit.
 
 _Have another more specific idea? You may want to check out our vibrant collection of [official and community-created starters](https://www.gatsbyjs.com/docs/gatsby-starters/)._
 
