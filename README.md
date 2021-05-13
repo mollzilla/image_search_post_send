@@ -57,6 +57,8 @@ Started over with the api. Studied it carefully and found the variables "after" 
 
 Followed a tutorial which familiarized me with the useCallback hook, which allowed me to use IntersectionObserver without the two event listeners that I set originally.
 
+Soon realized scalability and readability would not be possible without a provider. Decided that would implement pagination successfully before moving data to provider in order to pinpoint the how and what to be stored and passed down.
+
 _Have another more specific idea? You may want to check out our vibrant collection of [official and community-created starters](https://www.gatsbyjs.com/docs/gatsby-starters/)._
 
 ## 🚀 Quick start

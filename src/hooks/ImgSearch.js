@@ -10,14 +10,17 @@ function ImgSearch(keywords) {
   const [results, setResults] = useState([]);
   const [resultsInfo, setResultsInfo] = useState({});
 
-  const [offset, setOffset] = useState("");
+  const [pagination, setPagination] = useState(1);
 
   const [after, setAfter] = useState("");
   const [afterInfo, setAfterInfo] = useState({});
 
+  const incrementPagination = () => setPagination(pagination + 1);
+
   useEffect(() => {
     setResults([]);
     setImages([]);
+    setPagination(1);
   }, [keywords]);
 
   useEffect(() => {
@@ -26,9 +29,11 @@ function ImgSearch(keywords) {
     setAfter([]);
     setAfterInfo({});
 
-    // try {
+    let afterParam = pagination > 1 ? `&count=25&after=t3_nbdufd${after}` : "";
 
-    const results = axios.get(`https://www.reddit.com/r/${keywords}/top.json`);
+    const results = axios.get(
+      `https://www.reddit.com/r/${keywords}/top.json?${afterParam}`
+    );
 
     //     let params = {
     //       after: "after",
@@ -41,22 +46,19 @@ function ImgSearch(keywords) {
     // the maximum number of items desired (default: 25, maximum: 100)
     //     }
 
-    /* CLEANUP SEARCH! */
-    // if(results?.data?.data?.children[0].data.id !== )
 
-    const after = axios.get(
-      `https://www.reddit.com/r/${keywords}/top.json?&count=25&after=t3_nb20r5`
-    );
+    // `https://www.reddit.com/r/${keywords}/top.json?&count=25&after=t3_nb20r5`
 
     results
       .then(results => {
         console.log(results);
 
         // const newImages = Utils.normalizeImages(results?.data?.data?.children);
-        const newImages = results?.data?.data?.children?.map(child => child?.data?.url)
+        const newImages = results?.data?.data?.children?.map(
+          child => child?.data?.url
+        );
         console.log(newImages);
 
-        /* KEEP AN EYE ON THIS, still need to do array cleanup in case of new search */
         setImages(prevImages => {
           return [...prevImages, ...newImages];
         });
@@ -73,8 +75,8 @@ function ImgSearch(keywords) {
         delete results?.data?.data?.children;
         setResults(results);
 
-        setOffset(results.data.data.after);
-
+        // setOffset(results.data.data.after);
+        setAfter(results.data.data.after);
         /* URL: check if url is image, or if media_metadata is present */
 
         // let info = results.data.data;
@@ -101,31 +103,31 @@ function ImgSearch(keywords) {
         setLoading(false);
       });
 
-    after
-      .then(after => {
-        //   setAfter(after.data.data);
+    // after
+    //   .then(after => {
+    //     //   setAfter(after.data.data);
 
-        //   let info = after.data.data
-        //   setAfterInfo({
-        //     children: info.children.map(child => ({
-        //       id: child.data.id,
-        //       kind: child.kind,
-        //       likes: child.data.likes,
-        //       image: child.data.url,
-        //       title: child.data.title
-        //     })),
-        //     dist: info.dist,
-        //     count: info.children.length,
-        //     after: info.after,
-        //     before: info.before
-        //   })
-        after.first = after?.data?.data?.children[0].data?.id;
+    //     //   let info = after.data.data
+    //     //   setAfterInfo({
+    //     //     children: info.children.map(child => ({
+    //     //       id: child.data.id,
+    //     //       kind: child.kind,
+    //     //       likes: child.data.likes,
+    //     //       image: child.data.url,
+    //     //       title: child.data.title
+    //     //     })),
+    //     //     dist: info.dist,
+    //     //     count: info.children.length,
+    //     //     after: info.after,
+    //     //     before: info.before
+    //     //   })
+    //     after.first = after?.data?.data?.children[0].data?.id;
 
-        delete after.data.data.children;
+    //     delete after.data.data.children;
 
-        setAfter(after);
-      })
-      .catch(err => console.log(err));
+    //     setAfter(after);
+    //   })
+    //   .catch(err => console.log(err));
 
     // .then(results => setResults(results.)
     // console.log(results)
@@ -134,7 +136,16 @@ function ImgSearch(keywords) {
     //  if (images && images.length > 0) setResults(images.flat(1));
   }, [keywords]);
 
-  return { results, resultsInfo, after, afterInfo, images, loading, error };
+  return {
+    results,
+    resultsInfo,
+    after,
+    images,
+    pagination,
+    incrementPagination,
+    loading,
+    error
+  };
 }
 
 export default ImgSearch;

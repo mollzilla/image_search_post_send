@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import styled from "styled-components";
 
-const ResultsGrid = ({ results, loading }) => {
+const ResultsGrid = ({ results, loading, after, incrementPagination }) => {
   const [offset, setOffset] = useState(1);
   const [viewportItems, setViewportItems] = useState(1);
   const [vh, setVh] = useState(0);
@@ -19,12 +19,13 @@ const ResultsGrid = ({ results, loading }) => {
     observer.current = new IntersectionObserver(watched => {
         if(watched[0].isIntersecting) {
           console.log("found!")
+          incrementPagination()
         }
     })
 
     if(node) observer.current.observe(node)
   
-  }, [loading, ]);
+  }, [loading, after]);
 
   return (
     <>

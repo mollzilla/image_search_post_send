@@ -8,14 +8,7 @@ import ImgSearch from "@hooks/ImgSearch";
 
 const SearchContainer = () => {
   const [keywords, setkeywords] = useState("");
-  const [pagination, setPagination] = useState(1);
-
-  const scrollToLastEntry = useRef();
-
-  const getKeywords = e => {
-    setkeywords(e);
-    setPagination(1);
-  };
+  // const [pagination, setPagination] = useState("");
 
   const {
     results,
@@ -23,11 +16,15 @@ const SearchContainer = () => {
     after,
     afterInfo,
     images,
+    pagination,
+    incrementPagination,
     loading,
-    error
+    error,
   } = ImgSearch(keywords);
 
-
+  const getKeywords = e => {
+    setkeywords(e);
+  };
 
   return (
     <Container>
@@ -42,7 +39,7 @@ const SearchContainer = () => {
       {/* {error && error!==403 &&  <p>Warning: some of the matching subreddits returned an error. This might be caused by a forbidden subreddit, or an inexistent one. </p>} */}
 
 
-      <ResultsGrid results={images} loading={loading} />
+      <ResultsGrid results={images} loading={loading} after={after} pagination={pagination} incrementPagination={incrementPagination} />
     </Container>
   );
 };
