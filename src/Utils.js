@@ -6,10 +6,16 @@ export default class Utils {
     )[0];
 
  /* in case of image thumbnails, elements like tags might be returned, or even empty images, therefore they have been filtered with a regexp */
-    const imagesUrl = resultsArr
+    const imagesThumbnail = resultsArr
       ?.map(child => child?.data?.thumbnail)
       .filter(
         url => url.match(/^(?!.*(default|self|nsfw|spoiler)).*$/) && url !== ""
+      );
+
+      const imagesUrl = resultsArr
+      ?.map(child => child?.data?.url)
+      .filter(
+        url => url.match(/^(?!.*(default|self|nsfw|spoiler|gallery|v.)).*$/) && url !== ""
       );
 
     let metadataImages = [];
@@ -17,7 +23,7 @@ export default class Utils {
       metadataImages = Object.keys(imagesObject)
         .map(key => imagesObject[key].p[1].u)
 
-    return [...imagesUrl, ...metadataImages];
+    return [...imagesUrl, ...metadataImages, ...imagesThumbnail];
   }
 }
 // (jpg)|(imgur)|(i.redd)
