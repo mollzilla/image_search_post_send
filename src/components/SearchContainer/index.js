@@ -20,7 +20,8 @@ const SearchContainer = () => {
     incrementPagination,
     loading,
     error,
-    children
+    children,
+    err400Message
   } = ImgSearch(keywords);
 
   const getKeywords = e => {
@@ -30,6 +31,7 @@ const SearchContainer = () => {
   return (
     <Container>
       <SearchBar getKeywords={getKeywords} />
+
       {/* <pre>{JSON.stringify(results?.children?.map(child => child.data), null, 4)}</pre> */}
       <pre>{JSON.stringify( children, null, 2)}</pre>
       <pre>{JSON.stringify( results, null, 2)}</pre>
@@ -41,7 +43,7 @@ const SearchContainer = () => {
       {/* {error && error!==403 &&  <p>Warning: some of the matching subreddits returned an error. This might be caused by a forbidden subreddit, or an inexistent one. </p>} */}
 
 
-      <ResultsGrid results={images} loading={loading} after={after} pagination={pagination} incrementPagination={incrementPagination} />
+      <ResultsGrid children={children} results={images} loading={loading} after={after} pagination={pagination} incrementPagination={incrementPagination} />
     </Container>
   );
 };

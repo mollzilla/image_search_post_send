@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import styled from "styled-components";
 
-const ResultsGrid = ({ results, loading, after, incrementPagination }) => {
+const ResultsGrid = ({ results, loading, after, incrementPagination, children }) => {
   const [offset, setOffset] = useState(1);
   const [viewportItems, setViewportItems] = useState(1);
   const [vh, setVh] = useState(0);
@@ -37,23 +37,6 @@ const ResultsGrid = ({ results, loading, after, incrementPagination }) => {
           : "No results to show"}
       </h1>
       <Grid>
-        {/* {results.map((result, i) =>
-          results.length === i + 1 ? (
-            <img
-              ref={lastImgRef}
-              src={result?.replace(/amp;/g, "")}
-              alt="search result"
-              key={i}
-            />
-          ) : (
-            <img
-              src={result?.replace(/amp;/g, "")}
-              alt="search result"
-              key={i}
-            />
-          )
-        )} */}
-
         {results.map((result, i) =>
           results.length === i + 1 ? (
             <img
@@ -70,6 +53,27 @@ const ResultsGrid = ({ results, loading, after, incrementPagination }) => {
             />
           )
         )}
+
+        {/* {children.map((child, i) =>
+          children.length === i + 1 ? (
+            <img
+              ref={lastImgRef}
+              src={child?.image.replace(/amp;/g, "")}
+              alt="search result"
+              key={i}
+            />
+          ) : (
+            <div>
+            <img
+              src={child?.image.replace(/amp;/g, "")}
+              alt="search result"
+              key={i}
+            />
+              <span>{child.title}</span>
+              <span>{child.awards>0 && child.awards}</span>
+            </div>
+          )
+        )} */}
       </Grid>
     </>
   );
