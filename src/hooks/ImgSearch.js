@@ -14,6 +14,7 @@ function ImgSearch(keywords) {
 
   const [after, setAfter] = useState("");
   const [afterInfo, setAfterInfo] = useState({});
+  const [children, setChildren] = useState([]);
 
   const incrementPagination = () => setPagination(pagination + 1);
 
@@ -26,15 +27,14 @@ function ImgSearch(keywords) {
   useEffect(() => {
     setLoading(true);
     setError(false);
-    setAfter([]);
     setAfterInfo({});
 
-    let afterParam = pagination > 1 ? `&count=25&after=t3_nbdufd${after}` : "";
+    let afterParam = pagination > 1 && after !== null ? `?&after=${after}` : "";
 
-    const results = axios.get(
-      `https://www.reddit.com/r/${keywords}/top.json?${afterParam}`
-    );
+    const string = `https://www.reddit.com/r/${keywords}/top.json${afterParam}`;
+    console.log(string);
 
+    const results = axios.get(string);
     //     let params = {
     //       after: "after",
     //       count: 60;
@@ -46,95 +46,58 @@ function ImgSearch(keywords) {
     // the maximum number of items desired (default: 25, maximum: 100)
     //     }
 
-
     // `https://www.reddit.com/r/${keywords}/top.json?&count=25&after=t3_nb20r5`
 
     results
-      .then(results => {
-        console.log(results);
+      .then(newResults => {
+        // 403 == cannot get any data from subreddit
+        // subreddit_type !== public (although 200 status) wont be able to query
 
-        // const newImages = Utils.normalizeImages(results?.data?.data?.children);
-        const newImages = results?.data?.data?.children?.map(
+
+
+        if (newResults.status !== 200) return;
+        if (results<1 && after===null) {
+          return;
+        };
+
+
+        // const newImages = Utils.normalizeImages(newResults?.data?.data?.children);
+        console.log(newResults.data.data.after);
+
+        setAfter(newResults.data.data.after);
+
+        const newImages = newResults?.data?.data?.children?.map(
           child => child?.data?.url
-        );
-        console.log(newImages);
-
+        ).filter(url => url.match(/(i.redd|jpg|gif|imgur)/));
+        
         setImages(prevImages => {
           return [...prevImages, ...newImages];
         });
 
-        console.log(images);
-        results.last =
-          results?.data?.data?.children[
-            results?.data?.data?.children?.length - 1
-          ].data.id;
+        setResults(newResults);
 
-        results.first = results?.data?.data?.children[0].data.id;
+        let info = [];
+        info = newResults?.data?.data.children;
 
-        console.log(results.last);
-        delete results?.data?.data?.children;
-        setResults(results);
-
-        // setOffset(results.data.data.after);
-        setAfter(results.data.data.after);
-        /* URL: check if url is image, or if media_metadata is present */
-
-        // let info = results.data.data;
-        // setResultsInfo({
-        //   children: info.children.map(child => ({
-        //     id: child.data.id,
-        //     kind: child.kind,
-        //     awards: child.data.total_awards_received,
-        //     image: child.data.url,
-        //     title: child.data.title
-        //   })),
-        //   dist: info.dist,
-        //   count: info.children.length,
-        //   after: info.after,
-        //   before: info.before
-        // });
+        setChildren(
+          [...info].map(child => ({
+            id: child.data.id,
+            kind: child.kind,
+            awards: child.data.total_awards_received,
+            image: child.data.url,
+            title: child.data.title
+          }))
+        );
 
         setLoading(false);
       })
       .catch(err => {
-        // setResults([]);
         setResultsInfo({});
         console.log(err);
         setLoading(false);
       });
 
-    // after
-    //   .then(after => {
-    //     //   setAfter(after.data.data);
-
-    //     //   let info = after.data.data
-    //     //   setAfterInfo({
-    //     //     children: info.children.map(child => ({
-    //     //       id: child.data.id,
-    //     //       kind: child.kind,
-    //     //       likes: child.data.likes,
-    //     //       image: child.data.url,
-    //     //       title: child.data.title
-    //     //     })),
-    //     //     dist: info.dist,
-    //     //     count: info.children.length,
-    //     //     after: info.after,
-    //     //     before: info.before
-    //     //   })
-    //     after.first = after?.data?.data?.children[0].data?.id;
-
-    //     delete after.data.data.children;
-
-    //     setAfter(after);
-    //   })
-    //   .catch(err => console.log(err));
-
-    // .then(results => setResults(results.)
-    // console.log(results)
-    // const images = await Utils.normalizeImages(results?.data?.data?.children.slice(0, 50))
-
-    //  if (images && images.length > 0) setResults(images.flat(1));
-  }, [keywords]);
+  }, [keywords, pagination]);
 
   return {
     results,
@@ -144,7 +107,8 @@ function ImgSearch(keywords) {
     pagination,
     incrementPagination,
     loading,
-    error
+    error,
+    children
   };
 }
 

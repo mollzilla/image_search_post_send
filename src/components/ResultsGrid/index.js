@@ -12,20 +12,22 @@ const ResultsGrid = ({ results, loading, after, incrementPagination }) => {
 
   const observer = useRef();
 
-  const lastImgRef = useCallback(node => {console.log(node);
-    if(loading) return;
-    if(observer.current) observer.current.disconnect();
+  const lastImgRef = useCallback(
+    node => {
+      if (loading) return;
+      if (observer.current) observer.current.disconnect();
 
-    observer.current = new IntersectionObserver(watched => {
-        if(watched[0].isIntersecting) {
-          console.log("found!")
-          incrementPagination()
+      observer.current = new IntersectionObserver(watched => {
+        if (watched[0].isIntersecting) {
+          console.log("found!");
+          incrementPagination();
         }
-    })
+      });
 
-    if(node) observer.current.observe(node)
-  
-  }, [loading, after]);
+      if (node) observer.current.observe(node);
+    },
+    [loading, after]
+  );
 
   return (
     <>
@@ -35,6 +37,23 @@ const ResultsGrid = ({ results, loading, after, incrementPagination }) => {
           : "No results to show"}
       </h1>
       <Grid>
+        {/* {results.map((result, i) =>
+          results.length === i + 1 ? (
+            <img
+              ref={lastImgRef}
+              src={result?.replace(/amp;/g, "")}
+              alt="search result"
+              key={i}
+            />
+          ) : (
+            <img
+              src={result?.replace(/amp;/g, "")}
+              alt="search result"
+              key={i}
+            />
+          )
+        )} */}
+
         {results.map((result, i) =>
           results.length === i + 1 ? (
             <img

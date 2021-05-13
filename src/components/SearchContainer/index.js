@@ -20,6 +20,7 @@ const SearchContainer = () => {
     incrementPagination,
     loading,
     error,
+    children
   } = ImgSearch(keywords);
 
   const getKeywords = e => {
@@ -30,7 +31,8 @@ const SearchContainer = () => {
     <Container>
       <SearchBar getKeywords={getKeywords} />
       {/* <pre>{JSON.stringify(results?.children?.map(child => child.data), null, 4)}</pre> */}
-      <pre>{JSON.stringify(results, null, 2)}</pre>
+      <pre>{JSON.stringify( children, null, 2)}</pre>
+      <pre>{JSON.stringify( results, null, 2)}</pre>
       {/* <pre>{JSON.stringify(resultsInfo, null, 1)}</pre> */}
       {/* <pre>{JSON.stringify(after, null, 2)}</pre> */}
       {/* <pre>{JSON.stringify(afterInfo, null, 1)}</pre> */}
