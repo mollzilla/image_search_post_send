@@ -53,6 +53,10 @@ Decided to make pagination depend on a fixed number of results and not a calcula
 
 Unfortunately, after carefully reading the briefing again, it became evident that the pagination was to be done by calling the API, and therefore the complex search including all matching subreddits became virtually impossible to handle. Therefore, modified the query to match only one subreddit.
 
+Started over with the api. Studied it carefully and found the variables "after" and "before" that provide the data needed to create the offset. Also will need more data than the images, in order to use the entry id to identify the last picture in display and trigger the new search.
+
+Followed a tutorial which familiarized me with the useCallback hook, which allowed me to use IntersectionObserver without the two event listeners that I set originally.
+
 _Have another more specific idea? You may want to check out our vibrant collection of [official and community-created starters](https://www.gatsbyjs.com/docs/gatsby-starters/)._
 
 ## 🚀 Quick start

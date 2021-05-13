@@ -52,7 +52,8 @@ function ImgSearch(keywords) {
       .then(results => {
         console.log(results);
 
-        const newImages = Utils.normalizeImages(results?.data?.data?.children);
+        // const newImages = Utils.normalizeImages(results?.data?.data?.children);
+        const newImages = results?.data?.data?.children?.map(child => child?.data?.url)
         console.log(newImages);
 
         /* KEEP AN EYE ON THIS, still need to do array cleanup in case of new search */
