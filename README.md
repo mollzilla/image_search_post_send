@@ -65,9 +65,11 @@ After context provider was applied, code improved significantly
 
 Another unexpected and unwelcomed setback, the fancy masonry grid was shifting items around and therefore effectively destroying the intersection observer functionality. Went over all the variables to make sure they were cleaned up before resorting to revise the styling.
 
-Decided to add a Random Word funtionality. Unfortunately many words chosen return NSFW results. Unsure about keeping feature.
+Decided to add a Random Word funtionality. Upnfortunately many words chosen return NSFW results. Unsure about keeping feature.
 
 Applied NSFW filter to prevent random words from returning unexpectedly explicit results. Might consider applying an optional filter ahead.
+
+Time to attempt unit test
 
 _Have another more specific idea? You may want to check out our vibrant collection of [official and community-created starters](https://www.gatsbyjs.com/docs/gatsby-starters/)._
 

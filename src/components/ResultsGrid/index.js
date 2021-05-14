@@ -36,7 +36,7 @@ const ResultsGrid = () => {
 
   return (
     <>
-      <pre>{JSON.stringify(results, null, 1)}</pre>
+      {/* <pre>{JSON.stringify(results, null, 1)}</pre> */}
       <h1 style={{ textAlign: "center" }}>
         {images && images.length > 0
           ? "Showing " + images.length + " results"

@@ -1,0 +1,58 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Header renders correctly 1`] = `
+<header
+  className="sc-bdnxRM czvUhT"
+>
+  <h1
+    style={
+      Object {
+        "margin": 0,
+      }
+    }
+  >
+    <a
+      href="/"
+    >
+      Default Starter
+    </a>
+  </h1>
+  <nav
+    style={
+      Object {
+        "width": "60%",
+      }
+    }
+  >
+    <ul>
+      <li
+        style={
+          Object {
+            "margin": 0,
+          }
+        }
+      >
+        <a
+          href="/search"
+        >
+          Search!
+        </a>
+      </li>
+      <li
+        style={
+          Object {
+            "margin": 0,
+          }
+        }
+      >
+        <a
+          href="https://github.com/mollzilla"
+          to="/404"
+        >
+          About
+        </a>
+      </li>
+    </ul>
+  </nav>
+</header>
+`;
