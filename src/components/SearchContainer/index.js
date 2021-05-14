@@ -28,4 +28,19 @@ export default SearchContainer;
 const Container = styled.div`
   max-width: 1240px;
   margin: 0 auto;
+  padding: 32px;
+
+  @media (min-width: 600px) {
+    padding: 32px 64px;
+  }
+  @media (min-width: 768px) {
+    padding: 32px 64px;
+  }
+  @media (min-width: 1024px) {
+    padding: 32px 64px;
+  }
+
+  @media (min-width: 1240px) {
+    padding: 32px;
+  }
 `;

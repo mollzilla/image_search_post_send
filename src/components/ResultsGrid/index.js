@@ -25,7 +25,6 @@ const ResultsGrid = () => {
 
       observer.current = new IntersectionObserver(watched => {
         if (watched[0].isIntersecting) {
-          console.log("found!");
           setPagination(pagination + 1);
         }
       });
