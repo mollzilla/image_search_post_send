@@ -3,6 +3,9 @@ import styled from "styled-components";
 // import { ImgContext } from "@context/ImagesContext";
 import { ImgContext } from "../../context/ImagesContext";
 
+import redditPlaceholder from "@images/placeholder.png"
+import { placeHolderImg } from "gatsby-plugin-image";
+
 const ResultsGrid = () => {
   const {
     loading,
