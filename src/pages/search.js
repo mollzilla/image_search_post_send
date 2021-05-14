@@ -7,6 +7,7 @@ import Seo from "../components/seo"
 const SearchPage = () => (
   <Layout>
     <Seo title="Search Page" />
+    
     <SearchContainer />
 
   </Layout>

@@ -1,20 +1,19 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useContext, useRef, useCallback } from "react";
 import styled from "styled-components";
+import ImgContextProvider from "@context/ImagesContext";
+import { ImgContext } from "@context/ImagesContext";
+
+// src/ImagesContext.js
 
 const ResultsGrid = ({
   results,
   loading,
   after,
   incrementPagination,
-  children
+  elements
 }) => {
-  const [offset, setOffset] = useState(1);
-  const [viewportItems, setViewportItems] = useState(1);
-  const [vh, setVh] = useState(0);
-
-  const [visibleResults, setVisibleResults] = useState(
-    [...results].slice(0, 60)
-  );
+  // const { mili } = useContext(ImgContext);
+// console.log(mili)
 
   const observer = useRef();
 
@@ -37,11 +36,15 @@ const ResultsGrid = ({
 
   return (
     <>
+      {/* <pre>{JSON.stringify(images, null, 1)}</pre> */}
+      {/* <pre>{JSON.stringify(pagination, null, 1)}</pre> */}
+
       <h1 style={{ textAlign: "center" }}>
         {results.length > 0
           ? "Showing " + results.length + " results"
           : "No results to show"}
       </h1>
+
       <Grid>
         {results.map((result, i) =>
           results.length === i + 1 ? (
@@ -94,18 +97,12 @@ export default ResultsGrid;
 //#AECF80
 
 const Grid = styled.section`
-  /* Prevent vertical gaps */
   line-height: 0;
 
-  /* -webkit-column-count: 5;
-  -webkit-column-gap: 0px;
-  -moz-column-count: 5;
-  -moz-column-gap: 0px; */
   column-count: 5;
   column-gap: 0px;
 
   img {
-    /* Just in case there are inline attributes */
     width: 100% !important;
     height: auto !important;
     margin: 0 !important;
@@ -124,81 +121,3 @@ const Grid = styled.section`
     column-count: 1;
   }
 `;
-
-/* img {
-    margin: 0 auto;
-  }
-
-  padding: 32px;
-  display: grid;
-  grid-template-rows: (minmax(1fr, 140px));
-  grid-template-columns: 1fr 1fr;
-  grid-gap: 25px;
-  justify-content: center;
-
-  @media (min-width: 600px) {
-    padding: 32px 64px;
-    grid-template-columns: Repeat(3, 1fr);
-  }
-
-  @media (min-width: 768px) {
-    padding: 32px 64px;
-    grid-template-columns: Repeat(4, 1fr);
-  }
-
-  @media (min-width: 1024px) {
-    padding: 32px 64px;
-    grid-template-columns: Repeat(6, 1fr);
-  } */
-
-/* 
-  @media (min-width: 1240px) {
-    padding: 32px 128px;
-    grid-template-columns: Repeat(7, 1fr);
-  } */
-
-// const getVh = () => {
-//   const vh = Math.max(
-//     document.documentElement.clientHeight || 0,
-//     window.innerHeight || 0
-//   );
-
-//   const vw = window.innerWidth;
-//   const position = document.documentElement.scrollTop+window.innerHeight;
-
-//   /* 165 is grid item height */
-//   let rows = Math.ceil(vh/165)
-
-//   let rowItems;
-//   let viewportItems;
-
-//   /* switch deemed inadequate for variable comparison */
-//   if (vw > 1240) rowItems = 6;
-//   else if (vw > 1024) rowItems = 4;
-//   else if (vw > 768) rowItems = 3;
-//   else rowItems = 2;
-
-//   viewportItems = rowItems*rows;
-
-//   // console.log(rowItems, viewportItems, position)
-
-//   console.log(position-vh*offset)
-
-//   if(position-vh*offset>rows)
-//     setOffset(offset*viewportItems)
-
-//   return [viewportItems, position]
-// };
-
-// useEffect(() => {
-
-//   setViewportItems(getVh()[0])
-
-//   window.addEventListener("resize", getVh);
-//   window.addEventListener("scroll", getVh);
-
-//   return () => {
-//     window.removeEventListener("resize");
-//     window.removeEventListener("scroll");
-//   };
-// }, []);
