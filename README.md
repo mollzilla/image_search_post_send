@@ -69,7 +69,9 @@ Decided to add a Random Word funtionality. Upnfortunately many words chosen retu
 
 Applied NSFW filter to prevent random words from returning unexpectedly explicit results. Might consider applying an optional filter ahead.
 
-Time to attempt unit test
+Time to attempt unit test.
+
+Test seems to not like the gatsby aliases. For the purpose of delivering an MVP this issue will not be addressed as of now.
 
 _Have another more specific idea? You may want to check out our vibrant collection of [official and community-created starters](https://www.gatsbyjs.com/docs/gatsby-starters/)._
 
