@@ -5,14 +5,11 @@ import { ImgContext } from "@context/ImagesContext";
 const ResultsGrid = () => {
   const {
     loading,
-    error,
     images,
     pagination,
     setPagination,
     after,
     results,
-    keywords,
-    setKeywords,
     elements
   } = useContext(ImgContext);
 
@@ -39,9 +36,7 @@ const ResultsGrid = () => {
 
   return (
     <>
-      {/* <pre>{JSON.stringify(images, null, 1)}</pre> */}
       <pre>{JSON.stringify(results, null, 1)}</pre>
-
       <h1 style={{ textAlign: "center" }}>
         {images && images.length > 0
           ? "Showing " + images.length + " results"

@@ -26,4 +26,3 @@ const imagesThumbnail = []
     return [...imagesUrl, ...metadataImages, ...imagesThumbnail];
   }
 }
-// (jpg)|(imgur)|(i.redd)
