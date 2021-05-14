@@ -24,7 +24,8 @@ const ResultsGrid = () => {
       if (observer.current) observer.current.disconnect();
 
       observer.current = new IntersectionObserver(watched => {
-        if (watched[0].isIntersecting) {
+
+        if (watched[0].isIntersecting && after!==null) {
           setPagination(pagination + 1);
         }
       });

@@ -51,19 +51,16 @@ export default function ImgContextProvider({ children }) {
     const string = `https://www.reddit.com/r/${
       random ? randomWord : keywords
     }/top.json${afterParam}`;
+
     const results = axios.get(string);
 
     results
       .then(newResults => {
-        /* TODO : ONE RESULT BUG */
-        if (results < 1 && after === null) {
-          setLoading(false);
-          return;
-        }
 
+        
         // const newImages = Utils.normalizeImages(newResults?.data?.data?.children);
 
-        setAfter(newResults.data.data.after);
+        setAfter(newResults?.data?.data?.after);
 
         console.log(
           newResults?.data?.data?.children?.map(child => child?.data?.preview)
@@ -88,6 +85,7 @@ export default function ImgContextProvider({ children }) {
         info = newResults?.data?.data.children;
         setRandom(null);
 
+        /* Future iteration: add further information to images displayed */
         setElements(
           [...info].map(child => ({
             id: child.data.id,
