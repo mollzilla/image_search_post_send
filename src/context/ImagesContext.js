@@ -31,6 +31,7 @@ export default function ImgContextProvider({ children }) {
   useEffect(() => {
     setLoading(true);
     setError(false);
+    setErr400Message("")
 
     const randomFetch = axios.get("https://random-word-api.herokuapp.com/word");
 
@@ -38,15 +39,15 @@ export default function ImgContextProvider({ children }) {
 
     if (random) {
       randomFetch.then(newRandom => {
-        console.log(newRandom.data[0]);
         setKeywords(newRandom.data[0]);
         randomWord = newRandom.data[0];
 
-        console.log(keywords, randomWord);
         setRandom(false);
       });
     }
     let afterParam = pagination > 1 && after !== null ? `?&after=${after}` : "";
+    console.log(keywords);
+    if (keywords === "") return;
 
     const string = `https://www.reddit.com/r/${
       random ? randomWord : keywords
@@ -56,15 +57,9 @@ export default function ImgContextProvider({ children }) {
 
     results
       .then(newResults => {
-
-        
         // const newImages = Utils.normalizeImages(newResults?.data?.data?.children);
 
         setAfter(newResults?.data?.data?.after);
-
-        console.log(
-          newResults?.data?.data?.children?.map(child => child?.data?.preview)
-        );
 
         const newImages = newResults?.data?.data?.children
           .filter(child => child.data.over_18 !== true)
@@ -102,14 +97,15 @@ export default function ImgContextProvider({ children }) {
       })
       .catch(err => {
         setRandom(null);
-        console.log(err);
 
         if (err.response) {
-          if (err.response.status === 403)
+          if (err.response.status === 403) {
             setErr400Message("It seems like this subreddit is private...");
+          }
 
-          if (err.response.status === 404)
+          if (err.response.status === 404) {
             setErr400Message("It seems like this subreddit doesn't exist...");
+          }
         }
 
         setLoading(false);

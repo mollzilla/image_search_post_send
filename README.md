@@ -8,6 +8,15 @@
   Mili's Athonet image search Challenge
 </h1>
 
+THIS IS A CONTINUATION OF THE ORIGINAL CHALLENGE, CONTINUED AFTER VIRTUAL DEADLINE OF FRIDAY 14TH 4.PM
+
+I'm attempting to tackle all, or at least some of the unfinished but desired features, since original code was set back significantly by an attempt at add excesive complexity that eventually led to the necessity of starting over.
+
+I want to deliver the best project, and even if it's post deadline and it won't be considered for my evaluation, I want to do it for my personal betterment.
+
+
+*********************************************
+
 This code is going to pose several challenges considering my tech stack and I'm ready and excited about embarking on the process.
 At this point I'm going to enumerate the steps and elaborate once the code is more rounded up.
 

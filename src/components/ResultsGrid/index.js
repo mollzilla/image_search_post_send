@@ -10,6 +10,7 @@ const ResultsGrid = () => {
     pagination,
     setPagination,
     after,
+    err400Message,
     results,
     elements
   } = useContext(ImgContext);
@@ -44,6 +45,7 @@ const ResultsGrid = () => {
           ? "Showing " + images.length + " results"
           : "No results to show"}
       </h1>
+      {err400Message && <h2>{err400Message}</h2>}
 
       <Grid>
         {images &&
