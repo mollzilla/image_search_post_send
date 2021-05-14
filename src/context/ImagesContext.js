@@ -63,15 +63,20 @@ export default function ImgContextProvider({ children }) {
 
         setAfter(newResults.data.data.after);
 
+        console.log(newResults?.data?.data?.children?.map(child => child?.data?.preview));
+
         const newImages = newResults?.data?.data?.children
+          .filter(child => child.data.over_18!==true)
           ?.map(child => child?.data?.url)
-          .filter(url => url.match(/(i.redd|jpg|gif|imgur|jpeg|png)/));
+          .filter(url => url.match(/(i.redd|jpg|gif|imgur|jpeg|png)/) && url.match(/^(?!.*(default|self|nsfw|spoiler|gallery|v.|gifv|redgifs)).*$/)
+          );
 
         setImages(prevImages => {
           return [...new Set([...prevImages, ...newImages])];
         });
 
-        setResults(newResults);
+
+        
 
         let info = [];
         info = newResults?.data?.data.children;
@@ -86,6 +91,9 @@ export default function ImgContextProvider({ children }) {
             title: child.data.title
           }))
         );
+
+        setResults(newResults);
+
 
         setLoading(false);
       })

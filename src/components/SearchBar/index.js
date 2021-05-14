@@ -21,12 +21,10 @@ const SearchBar = () => {
         }}
       >
         Random!
-      </button>{" "}
+      </button>
       <span>
-        WARNING: seemingly innocent random word may return some unexpected NSFW
-        results. User discretion is advised.
+        For your convenience, NSFW images have been filtered.
       </span>
-      {/* According to assignment not necessary but for UI purposes will include it */}
     </SearchForm>
   );
 };

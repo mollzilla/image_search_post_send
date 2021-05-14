@@ -10,6 +10,7 @@ const ResultsGrid = () => {
     pagination,
     setPagination,
     after,
+    results,
     keywords,
     setKeywords,
     elements
@@ -39,7 +40,7 @@ const ResultsGrid = () => {
   return (
     <>
       {/* <pre>{JSON.stringify(images, null, 1)}</pre> */}
-      {/* <pre>{JSON.stringify(pagination, null, 1)}</pre> */}
+      <pre>{JSON.stringify(results, null, 1)}</pre>
 
       <h1 style={{ textAlign: "center" }}>
         {images && images.length > 0
