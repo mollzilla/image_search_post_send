@@ -13,18 +13,22 @@ const SearchBar = () => {
         onChange={e => setKeywords(e.target.value)}
         value={keywords}
       ></input>
-      {/* <button onClick={e => e.preventDefault()}>Hit it!</button>{" "} */}
       <button
         onClick={e => {
           e.preventDefault();
           setRandom(true);
         }}
+        /* default prevented on key considering users might press enter to see their keyword and not a random word */
+        onKeyDown={e => {
+          e.preventDefault();
+        }}
+        onKeyUp={e => {
+          e.preventDefault();
+        }}
       >
         Random!
       </button>
-      <span>
-        For your convenience, NSFW images have been filtered.
-      </span>
+      <span>For your convenience, NSFW images have been filtered.</span>
     </SearchForm>
   );
 };

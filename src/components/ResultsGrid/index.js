@@ -1,6 +1,7 @@
 import React, { useContext, useRef, useCallback } from "react";
 import styled from "styled-components";
-import { ImgContext } from "@context/ImagesContext";
+// import { ImgContext } from "@context/ImagesContext";
+import { ImgContext } from "../../context/ImagesContext";
 
 const ResultsGrid = () => {
   const {
@@ -31,6 +32,7 @@ const ResultsGrid = () => {
 
       if (node) observer.current.observe(node);
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [loading, after]
   );
 
@@ -96,9 +98,7 @@ export default ResultsGrid;
 //#AECF80
 
 const Grid = styled.section`
-
-
-img {
+  img {
     margin: 0 auto;
   }
   padding: 32px;

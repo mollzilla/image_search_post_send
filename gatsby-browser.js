@@ -1,5 +1,7 @@
-import React from "react"
-import { createGlobalStyle } from "styled-components"
+/* Global styles with styling component deemed adequate for a later iteration */
+
+// import React from "react"
+// import { createGlobalStyle } from "styled-components"
 
 // provider
 
