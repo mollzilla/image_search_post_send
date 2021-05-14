@@ -61,6 +61,10 @@ Soon realized scalability and readability would not be possible without a provid
 
 Once pagination was understood, applied and finally debugged, added some masonry to the looks and started to think about the structure of a provider and additional data that may be added
 
+After context provider was applied, code improved significantly
+
+Another unexpected and unwelcomed setback, the fancy masonry grid was shifting items around and therefore effectively destroying the intersection observer functionality. Went over all the variables to make sure they were cleaned up before resorting to revise the styling.
+
 _Have another more specific idea? You may want to check out our vibrant collection of [official and community-created starters](https://www.gatsbyjs.com/docs/gatsby-starters/)._
 
 ## 🚀 Quick start

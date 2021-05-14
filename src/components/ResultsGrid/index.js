@@ -1,13 +1,11 @@
 import React, { useContext, useRef, useCallback } from "react";
 import styled from "styled-components";
-import ImgContextProvider from "@context/ImagesContext";
 import { ImgContext } from "@context/ImagesContext";
 
 const ResultsGrid = () => {
   const {
     loading,
     error,
-    results,
     images,
     pagination,
     setPagination,
@@ -17,11 +15,9 @@ const ResultsGrid = () => {
     elements
   } = useContext(ImgContext);
 
-  console.log(pagination, error, keywords, setKeywords);
+  console.log(pagination);
 
   const observer = useRef();
-
-  console.log();
 
   const lastImgRef = useCallback(
     node => {
@@ -104,27 +100,33 @@ export default ResultsGrid;
 //#AECF80
 
 const Grid = styled.section`
-  line-height: 0;
 
-  column-count: 5;
-  column-gap: 0px;
 
-  img {
-    width: 100% !important;
-    height: auto !important;
-    margin: 0 !important;
+img {
+    margin: 0 auto;
+  }
+  padding: 32px;
+  display: grid;
+  grid-template-rows: (minmax(1fr, 140px));
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 25px;
+  justify-content: center;
+  align-items: center;
+  @media (min-width: 600px) {
+    padding: 32px 64px;
+    grid-template-columns: Repeat(2, 1fr);
+  }
+  @media (min-width: 768px) {
+    padding: 32px 64px;
+    grid-template-columns: Repeat(3, 1fr);
+  }
+  @media (min-width: 1024px) {
+    padding: 32px 64px;
+    grid-template-columns: Repeat(4, 1fr);
   }
 
-  @media (max-width: 1200px) {
-    column-count: 4;
-  }
-  @media (max-width: 1000px) {
-    column-count: 3;
-  }
-  @media (max-width: 800px) {
-    column-count: 2;
-  }
-  @media (max-width: 400px) {
-    column-count: 1;
+  @media (min-width: 1240px) {
+    padding: 32px;
+    grid-template-columns: Repeat(6, 1fr);
   }
 `;

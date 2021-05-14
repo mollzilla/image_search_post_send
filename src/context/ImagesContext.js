@@ -4,8 +4,7 @@ import Utils from "../Utils.js";
 
 export const ImgContext = React.createContext();
 
-export default function ImgContextProvider({children}) {
-
+export default function ImgContextProvider({ children }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [images, setImages] = useState([]);
@@ -18,36 +17,49 @@ export default function ImgContextProvider({children}) {
   const [err400Message, setErr400Message] = useState("");
   const [elements, setElements] = useState([]);
 
-  const [keywords, setKeywords] = useState("")
+  const [keywords, setKeywords] = useState("");
 
-
-  const incrementPagination = () => setPagination(pagination + 1);
+  const [random, setRandom] = useState(false);
 
   useEffect(() => {
     setResults([]);
     setImages([]);
     setPagination(1);
+    setAfter(null);
   }, [keywords]);
 
   useEffect(() => {
     setLoading(true);
     setError(false);
 
+    const randomFetch = axios.get("https://random-word-api.herokuapp.com/word");
+
+    let randomWord = "";
+    
+    if (random) {
+      randomFetch.then(newRandom => {
+        console.log(newRandom.data[0]);
+        setKeywords(newRandom.data[0]);
+        randomWord = newRandom.data[0];
+
+        console.log(keywords, randomWord)
+        setRandom(false);
+      });
+    }
     let afterParam = pagination > 1 && after !== null ? `?&after=${after}` : "";
 
-    const string = `https://www.reddit.com/r/${keywords}/top.json${afterParam}`;
+    const string = `https://www.reddit.com/r/${random ? randomWord : keywords}/top.json${afterParam}`;
     const results = axios.get(string);
 
     results
       .then(newResults => {
         /* TODO : ONE RESULT BUG */
         if (results < 1 && after === null) {
-          setLoading(false)
+          setLoading(false);
           return;
         }
 
         // const newImages = Utils.normalizeImages(newResults?.data?.data?.children);
-        console.log(newResults.data.data.after);
 
         setAfter(newResults.data.data.after);
 
@@ -63,6 +75,7 @@ export default function ImgContextProvider({children}) {
 
         let info = [];
         info = newResults?.data?.data.children;
+        setRandom(null);
 
         setElements(
           [...info].map(child => ({
@@ -77,27 +90,13 @@ export default function ImgContextProvider({children}) {
         setLoading(false);
       })
       .catch(err => {
+        setRandom(null);
         console.log(err);
         setLoading(false);
 
-        // if (err.response) {
-        //   if (err.response.status === 403)
-        //     setErr400Message("It seems like this subreddit is private...");
-
-        //   if (err.response.status === 404)
-        //     setErr400Message("It seems like this subreddit doesn't exist...");
-
-        //   console.log(err.response.data);
-        //   console.log(err.response.status);
-        //   console.log(err.response.headers);
-        // }
-
         return;
       });
-  }, [keywords, pagination]);
-
-
-
+  }, [keywords, pagination, random]);
 
   return (
     <ImgContext.Provider
@@ -109,10 +108,12 @@ export default function ImgContextProvider({children}) {
         setPagination,
         loading,
         error,
-        elements, 
+        elements,
         err400Message,
         keywords,
-        setKeywords
+        setKeywords,
+        random,
+        setRandom
       }}
     >
       {children}
@@ -120,15 +121,20 @@ export default function ImgContextProvider({children}) {
   );
 }
 
+// if (err.response) {
+//   if (err.response.status === 403)
+//     setErr400Message("It seems like this subreddit is private...");
 
+//   if (err.response.status === 404)
+//     setErr400Message("It seems like this subreddit doesn't exist...");
 
+//   console.log(err.response.data);
+//   console.log(err.response.status);
+//   console.log(err.response.headers);
+// }
 
+// const [random, setRandom] = useState(null);
 
+// axios.get("https://random-word-api.herokuapp.com/word")[0]
 
-
-
-
-
-
-
-
+// al final de todo setearla a null -> no va a hacer falta porque la va a tapar otra
