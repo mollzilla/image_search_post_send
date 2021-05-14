@@ -4,6 +4,11 @@ import axios from "axios";
 
 export const ImgContext = React.createContext();
 
+/**
+ * 
+ * @param {children} param0 
+ * @returns provider for all children with fetched data
+ */
 export default function ImgContextProvider({ children }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
@@ -21,12 +26,20 @@ export default function ImgContextProvider({ children }) {
 
   const [random, setRandom] = useState(false);
 
+  /**
+   * Clean up variables whenever user triggers a new search with a new keyword
+   */
+
   useEffect(() => {
     setResults([]);
     setImages([]);
     setPagination(1);
     setAfter(null);
   }, [keywords]);
+
+  /**
+   * DataFetcher from Reddit -or random word, in case of selected- returns data processed and filtered for images populating.
+   */
 
   useEffect(() => {
     setLoading(true);
@@ -37,6 +50,7 @@ export default function ImgContextProvider({ children }) {
 
     let randomWord = "";
 
+    /* In case user has clicked on a random word, trigger a fetch and set a local scope variable with it */
     if (random) {
       randomFetch.then(newRandom => {
         setKeywords(newRandom.data[0]);
@@ -45,9 +59,13 @@ export default function ImgContextProvider({ children }) {
         setRandom(false);
       });
     }
+
+    /* build the (optional) parameter string with the "after" variable from previous fetch */
     let afterParam = pagination > 1 && after !== null ? `?&after=${after}` : "";
     console.log(keywords);
     if (keywords === "") return;
+
+    /*Query string to be fetched */
 
     const string = `https://www.reddit.com/r/${
       random ? randomWord : keywords
@@ -57,10 +75,13 @@ export default function ImgContextProvider({ children }) {
 
     results
       .then(newResults => {
+
+        /* Originally a normalized images function was contemplated to retrieve not only image urls, but also gallery images and even icons */
         // const newImages = Utils.normalizeImages(newResults?.data?.data?.children);
 
         setAfter(newResults?.data?.data?.after);
 
+        /* URL is filtered to include only safe for all content and matched with images files. Not used extensions because of i.redd cases*/
         const newImages = newResults?.data?.data?.children
           .filter(child => child.data.over_18 !== true)
           ?.map(child => child?.data?.url)
@@ -72,12 +93,15 @@ export default function ImgContextProvider({ children }) {
               )
           );
 
+        /* Set and spread to add to previous elements but avoid repeated ones */
         setImages(prevImages => {
           return [...new Set([...prevImages, ...newImages])];
         });
 
-        let info = [];
-        info = newResults?.data?.data.children;
+
+        /* info fetched was considered for future iterations */
+        // let info = [];
+        // info = newResults?.data?.data.children;
         setRandom(null);
 
         /* Future iteration: add further information to images displayed */
@@ -98,6 +122,7 @@ export default function ImgContextProvider({ children }) {
       .catch(err => {
         setRandom(null);
 
+        /* In case of errors 403 or 404, clarify to user cases of inexistent or private subreddit (such as "/ultimateclub" subreddit) */
         if (err.response) {
           if (err.response.status === 403) {
             setErr400Message("It seems like this subreddit is private...");
@@ -137,14 +162,3 @@ export default function ImgContextProvider({ children }) {
     </ImgContext.Provider>
   );
 }
-
-//   console.log(err.response.data);
-//   console.log(err.response.status);
-//   console.log(err.response.headers);
-// }
-
-// const [random, setRandom] = useState(null);
-
-// axios.get("https://random-word-api.herokuapp.com/word")[0]
-
-// al final de todo setearla a null -> no va a hacer falta porque la va a tapar otra

@@ -3,6 +3,12 @@ import styled from "styled-components";
 import { ImgContext } from "../../context/ImagesContext";
 
 
+/**
+ * 
+ * @returns A grid containing the results amount as it populates, the images fetched and, in case of inexistent or private subreddit, a message to the user
+ */
+
+
 const ResultsGrid = () => {
   const {
     loading,
@@ -18,6 +24,10 @@ const ResultsGrid = () => {
   console.log(pagination);
 
   const observer = useRef();
+
+  /**
+   * Creates an intersection observer for the Ref of last item in the list. When intersected, and in case there is still data after this page, the pagination is updated thus triggering a new fetch
+   */
 
   const lastImgRef = useCallback(
     node => {

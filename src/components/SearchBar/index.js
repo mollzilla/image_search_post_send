@@ -2,9 +2,13 @@ import React, { useContext } from "react";
 import { ImgContext } from "@context/ImagesContext";
 import styled from "styled-components";
 
+/**
+ * 
+ * @returns The form including the search bar that updates as user types, and a  button that triggers a random word search. Contains also a NSFW filter advice to be toggled in next iteration
+ */
+
 const SearchBar = () => {
   const { keywords, setKeywords, setRandom } = useContext(ImgContext);
-
 
   return (
     <SearchForm>

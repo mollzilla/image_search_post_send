@@ -7,6 +7,9 @@ import ImgContextProvider from "@context/ImagesContext";
 const SearchContainer = () => {
 
 
+  /**
+   * Returns components wrapped in context provider to allow access to global state and single source of truth.
+   */
   return (
     <ImgContextProvider>
       <Container>
