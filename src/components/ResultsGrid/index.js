@@ -3,19 +3,25 @@ import styled from "styled-components";
 import ImgContextProvider from "@context/ImagesContext";
 import { ImgContext } from "@context/ImagesContext";
 
-// src/ImagesContext.js
+const ResultsGrid = () => {
+  const {
+    loading,
+    error,
+    results,
+    images,
+    pagination,
+    setPagination,
+    after,
+    keywords,
+    setKeywords,
+    elements
+  } = useContext(ImgContext);
 
-const ResultsGrid = ({
-  results,
-  loading,
-  after,
-  incrementPagination,
-  elements
-}) => {
-  // const { mili } = useContext(ImgContext);
-// console.log(mili)
+  console.log(pagination, error, keywords, setKeywords);
 
   const observer = useRef();
+
+  console.log();
 
   const lastImgRef = useCallback(
     node => {
@@ -25,7 +31,7 @@ const ResultsGrid = ({
       observer.current = new IntersectionObserver(watched => {
         if (watched[0].isIntersecting) {
           console.log("found!");
-          incrementPagination();
+          setPagination(pagination + 1);
         }
       });
 
@@ -40,28 +46,29 @@ const ResultsGrid = ({
       {/* <pre>{JSON.stringify(pagination, null, 1)}</pre> */}
 
       <h1 style={{ textAlign: "center" }}>
-        {results.length > 0
-          ? "Showing " + results.length + " results"
+        {images && images.length > 0
+          ? "Showing " + images.length + " results"
           : "No results to show"}
       </h1>
 
       <Grid>
-        {results.map((result, i) =>
-          results.length === i + 1 ? (
-            <img
-              ref={lastImgRef}
-              src={result?.replace(/amp;/g, "")}
-              alt="search result"
-              key={i}
-            />
-          ) : (
-            <img
-              src={result?.replace(/amp;/g, "")}
-              alt="search result"
-              key={i}
-            />
-          )
-        )}
+        {images &&
+          images.map((result, i) =>
+            images.length === i + 1 ? (
+              <img
+                ref={lastImgRef}
+                src={result?.replace(/amp;/g, "")}
+                alt="search result"
+                key={i}
+              />
+            ) : (
+              <img
+                src={result?.replace(/amp;/g, "")}
+                alt="search result"
+                key={i}
+              />
+            )
+          )}
 
         {/* {children.map((child, i) =>
           children.length === i + 1 ? (

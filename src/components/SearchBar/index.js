@@ -1,21 +1,19 @@
-import React, { useState } from "react";
-
+import React, { useState, useContext } from "react";
+import { ImgContext } from "@context/ImagesContext";
 import styled from "styled-components";
 
 const SearchBar = ({ getKeywords }) => {
-  const [keywords, setKeywords] = useState("");
 
-  const onKeywordChange = e => {
-    getKeywords(e.target.value);
-    setKeywords(e.target.value);
-  };
+  const { keywords, setKeywords } = useContext(ImgContext)
+
+console.log(keywords, setKeywords)
 
   return (
     <SearchForm>
       <input
         type="text"
         placeholder="Find it!"
-        onChange={e => onKeywordChange(e)}
+        onChange={e => setKeywords(e.target.value)}
         value={keywords}
       ></input>
       <button onClick={e => e.preventDefault()}>Hit it!</button>{" "}
@@ -23,12 +21,6 @@ const SearchBar = ({ getKeywords }) => {
     </SearchForm>
   );
 };
-
-//#E04485D
-//#322885
-//#FCE000
-//#4CAA2B
-//#AECF80
 
 export default SearchBar;
 
