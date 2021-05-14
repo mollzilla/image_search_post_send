@@ -1,10 +1,7 @@
 import React, { useContext, useRef, useCallback } from "react";
 import styled from "styled-components";
-// import { ImgContext } from "@context/ImagesContext";
 import { ImgContext } from "../../context/ImagesContext";
 
-import redditPlaceholder from "@images/placeholder.png"
-import { placeHolderImg } from "gatsby-plugin-image";
 
 const ResultsGrid = () => {
   const {
@@ -66,27 +63,6 @@ const ResultsGrid = () => {
               />
             )
           )}
-
-        {/* {children.map((child, i) =>
-          children.length === i + 1 ? (
-            <img
-              ref={lastImgRef}
-              src={child?.image.replace(/amp;/g, "")}
-              alt="search result"
-              key={i}
-            />
-          ) : (
-            <div>
-            <img
-              src={child?.image.replace(/amp;/g, "")}
-              alt="search result"
-              key={i}
-            />
-              <span>{child.title}</span>
-              <span>{child.awards>0 && child.awards}</span>
-            </div>
-          )
-        )} */}
       </Grid>
     </>
   );
