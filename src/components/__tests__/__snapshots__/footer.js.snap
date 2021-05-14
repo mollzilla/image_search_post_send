@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Footer renders correctly 1`] = `
+<footer
+  style={
+    Object {
+      "marginTop": "2rem",
+    }
+  }
+>
+  © 
+  2021
+  , Built with
+   
+  <a
+    href="https://github.com/mollzilla"
+  >
+    Gatsby by Mollzilla.
+  </a>
+  <br />
+  <a
+    href="https://github.com/mollzilla"
+  >
+    Find out why they call me Mollzilla.
+  </a>
+</footer>
+`;
