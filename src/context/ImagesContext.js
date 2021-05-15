@@ -100,8 +100,8 @@ export default function ImgContextProvider({ children }) {
 
 
         /* info fetched was considered for future iterations */
-        // let info = [];
-        // info = newResults?.data?.data.children;
+        let info = [];
+        info = newResults?.data?.data.children;
         setRandom(null);
 
         /* Future iteration: add further information to images displayed */
