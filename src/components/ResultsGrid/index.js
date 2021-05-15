@@ -1,13 +1,12 @@
+import { element } from "prop-types";
 import React, { useContext, useRef, useCallback } from "react";
 import styled from "styled-components";
 import { ImgContext } from "../../context/ImagesContext";
 
-
 /**
- * 
+ *
  * @returns A grid containing the results amount as it populates, the images fetched and, in case of inexistent or private subreddit, a message to the user
  */
-
 
 const ResultsGrid = () => {
   const {
@@ -21,8 +20,6 @@ const ResultsGrid = () => {
     elements
   } = useContext(ImgContext);
 
-  console.log(pagination);
-
   const observer = useRef();
 
   /**
@@ -35,8 +32,7 @@ const ResultsGrid = () => {
       if (observer.current) observer.current.disconnect();
 
       observer.current = new IntersectionObserver(watched => {
-
-        if (watched[0].isIntersecting && after!==null) {
+        if (watched[0].isIntersecting && after !== null) {
           setPagination(pagination + 1);
         }
       });
@@ -58,21 +54,51 @@ const ResultsGrid = () => {
       {err400Message && <h2>{err400Message}</h2>}
 
       <Grid>
-        {images &&
-          images.map((result, i) =>
-            images.length === i + 1 ? (
-              <img
-                ref={lastImgRef}
-                src={result?.replace(/amp;/g, "")}
-                alt="search result"
-                key={i}
-              />
+
+        {/* id: child.data.id,
+            kind: child.kind,
+            awards: child.data.total_awards_received,
+            image: child.data.url,
+            title: child.data.title */}
+
+        {elements &&
+          elements.map((element, i) =>
+            elements.length === i + 1 ? (
+              //<a href={element?.image}>
+                <div
+                  style={{
+                    boxShadow: "5px 5px 30px #AAAAAA",
+                    borderRadius: "5px",
+                    overflow: "hidden"
+                  }}
+                >
+                  <img
+                    ref={lastImgRef}
+                    src={element.image?.replace(/amp;/g, "")}
+                    alt="search result"
+                    key={i}
+                  />
+                  <p>{element.title || "No title"}</p>
+                </div>
+           //   </a>
             ) : (
-              <img
-                src={result?.replace(/amp;/g, "")}
-                alt="search result"
-                key={i}
-              />
+            //  <a href={element?.image}>
+                <div
+                  style={{
+                    overflow: "hidden",
+                    width: "100%",
+                    boxShadow: "5px 5px 30px #AAAAAA",
+                    borderRadius: "5px"
+                  }}
+                >
+                  <img
+                    src={element.image?.replace(/amp;/g, "")}
+                    alt="search result"
+                    key={i}
+                  />
+                  <p>{element.title || "No title"}</p>
+                </div>
+            //  </a>
             )
           )}
       </Grid>
@@ -91,6 +117,15 @@ export default ResultsGrid;
 const Grid = styled.section`
   img {
     margin: 0 auto;
+  }
+
+  p {
+    padding: 10px;
+
+    margin-bottom: 0;
+    text-align: center;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+      Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   }
   padding: 32px;
   display: grid;

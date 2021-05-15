@@ -5,26 +5,25 @@ import axios from "axios";
 export const ImgContext = React.createContext();
 
 /**
- * 
- * @param {children} param0 
+ *
+ * @param {children} param0
  * @returns provider for all children with fetched data
  */
 export default function ImgContextProvider({ children }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+
+  const [keywords, setKeywords] = useState("");
+  const [random, setRandom] = useState(false);
+
   const [images, setImages] = useState([]);
+  const [elements, setElements] = useState([]);
 
   const [results, setResults] = useState([]);
-
   const [pagination, setPagination] = useState(1);
 
   const [after, setAfter] = useState("");
   const [err400Message, setErr400Message] = useState("");
-  const [elements, setElements] = useState([]);
-
-  const [keywords, setKeywords] = useState("");
-
-  const [random, setRandom] = useState(false);
 
   /**
    * Clean up variables whenever user triggers a new search with a new keyword
@@ -33,8 +32,11 @@ export default function ImgContextProvider({ children }) {
   useEffect(() => {
     setResults([]);
     setImages([]);
+    setElements([]);
     setPagination(1);
     setAfter(null);
+    setRandom(false);
+    setErr400Message("");
   }, [keywords]);
 
   /**
@@ -44,7 +46,7 @@ export default function ImgContextProvider({ children }) {
   useEffect(() => {
     setLoading(true);
     setError(false);
-    setErr400Message("")
+    setErr400Message("");
 
     const randomFetch = axios.get("https://random-word-api.herokuapp.com/word");
 
@@ -63,7 +65,7 @@ export default function ImgContextProvider({ children }) {
     /* build the (optional) parameter string with the "after" variable from previous fetch */
     let afterParam = pagination > 1 && after !== null ? `?&after=${after}` : "";
     console.log(keywords);
-    if (keywords === "") return;
+    if (keywords === "" ) return;
 
     /*Query string to be fetched */
 
@@ -75,29 +77,12 @@ export default function ImgContextProvider({ children }) {
 
     results
       .then(newResults => {
-
         /* Originally a normalized images function was contemplated to retrieve not only image urls, but also gallery images and even icons */
         // const newImages = Utils.normalizeImages(newResults?.data?.data?.children);
 
         setAfter(newResults?.data?.data?.after);
 
-        /* URL is filtered to include only safe for all content and matched with images files. Not used extensions because of i.redd cases*/
-        const newImages = newResults?.data?.data?.children
-          .filter(child => child.data.over_18 !== true)
-          ?.map(child => child?.data?.url)
-          .filter(
-            url =>
-              url.match(/(i.redd|jpg|gif|imgur|jpeg|png)/) &&
-              url.match(
-                /^(?!.*(default|self|nsfw|spoiler|gallery|v.|gifv|redgifs)).*$/
-              )
-          );
-
-        /* Set and spread to add to previous elements but avoid repeated ones */
-        setImages(prevImages => {
-          return [...new Set([...prevImages, ...newImages])];
-        });
-
+        
 
         /* info fetched was considered for future iterations */
         let info = [];
@@ -105,16 +90,31 @@ export default function ImgContextProvider({ children }) {
         setRandom(null);
 
         /* Future iteration: add further information to images displayed */
-        setElements(
-          [...info].map(child => ({
+
+        let newElements = [...info]
+          .filter(child => child.data.over_18 !== true)
+          .filter(
+            child =>
+              child.data.url.match(/(i.redd|jpg|gif|imgur|jpeg|png)/) &&
+        /* URL is filtered to include only safe for all content and matched with images files. Not used extensions because of i.redd cases*/
+              child.data.url.match(
+                /^(?!.*(default|self|nsfw|spoiler|gallery|v.|gifv|redgifs)).*$/
+              )
+          )
+          .map(child => ({
             id: child.data.id,
             kind: child.kind,
             awards: child.data.total_awards_received,
             image: child.data.url,
             title: child.data.title
-          }))
-        );
+          }));
 
+          setElements(prevElements => {
+            return [...new Set([...prevElements, ...newElements])];
+          });
+  
+
+        console.log(elements);
         setResults(newResults);
 
         setLoading(false);
@@ -127,14 +127,12 @@ export default function ImgContextProvider({ children }) {
           if (err.response.status === 403) {
             setErr400Message("It seems like this subreddit is private...");
           }
-
           if (err.response.status === 404) {
             setErr400Message("It seems like this subreddit doesn't exist...");
           }
         }
 
         setLoading(false);
-
         return;
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
