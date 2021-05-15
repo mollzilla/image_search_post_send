@@ -63,46 +63,51 @@ export default function ImgContextProvider({ children }) {
           randomWord = newRandom.data[0];
         })
         .catch(err => {
-          setErr400Message(Utils.handleError(err));
+          console.log(err)
         });
     }
 
+    if (keywords === "" && randomWord === "") return;
+
     /* build the (optional) parameter string with the "after" variable from previous fetch */
     let afterParam = pagination > 1 && after !== null ? `?&after=${after}` : "";
-    console.log(keywords);
-    if (keywords === "") return;
 
-    /*Query string to be fetched */
+    const subreddit = axios.get(
+      `https://www.reddit.com/subreddits/search.json?q=${keywords}&exact=true`
+    );
 
-
-    let subreddit;
-    if (keywords != "") {
-      subreddit = axios.get(
-        `https://www.reddit.com/subreddits/search.json?q=${keywords}&exact=true`
-      );
-
-      subreddit
-        .then(subreddits => console.log(subreddits.data.data.children)) //.filter(child => child.data.display_name===keywords)))
-        .catch(err => console.log(err));
-    }
-
-    const string = `https://secret-ocean-49799.herokuapp.com/https://www.reddit.com/r/${
+    const queryString = `https://www.reddit.com/r/${
       random ? randomWord : keywords
     }/top.json${afterParam}`;
 
-    const results = axios.get(string);
-    results
+    subreddit
+      .then(subreddits =>
+        subreddits.data.data.children.filter(
+          child => child.data.display_name === keywords
+        )
+      )
+      .then(subreddits => {
+        console.log(subreddits.length)
+        if (subreddits.length === 0) {
+          setError(true)
+          console.log(94)
+          setErr400Message("It seels like this subreddit doesn't exist...");
+          throw new Error("It seems like this subreddit doesn't exist...");
+        } else {
+          console.log(subreddits);
+        }
+        return subreddits;
+      })
+      .then(() => axios.get(queryString))
       .then(newResults => {
         // console.log(newResults)
         /* Originally a normalized images function was contemplated to retrieve not only image urls, but also gallery images and even icons */
         // const newImages = Utils.normalizeImages(newResults?.data?.data?.children);
-
+setErr400Message("");
         setAfter(newResults?.data?.data?.after);
 
         /* info fetched was considered for future iterations */
-        let info = [];
-        
-        info = newResults?.data?.data.children;
+        let info = newResults?.data?.data.children;
         setRandom(null);
 
         /* Future iteration: add further information to images displayed */
@@ -110,9 +115,9 @@ export default function ImgContextProvider({ children }) {
         let newElements = [...info]
           .filter(child => child.data.over_18 !== true)
           .filter(
+            /* URL is filtered to include only safe for all content and matched with images files. Not used extensions because of i.redd cases*/
             child =>
               child.data.url.match(/(i.redd|jpg|gif|imgur|jpeg|png)/) &&
-              /* URL is filtered to include only safe for all content and matched with images files. Not used extensions because of i.redd cases*/
               child.data.url.match(
                 /^(?!.*(default|self|nsfw|spoiler|gallery|v.|gifv|redgifs)).*$/
               )
@@ -133,11 +138,10 @@ export default function ImgContextProvider({ children }) {
 
         setLoading(false);
       })
+
       .catch(err => {
         setRandom("");
-        setErr400Message(Utils.handleError(err));
-
-        /* In case of errors 403 or 404, clarify to user cases of inexistent or private subreddit (such as "/ultimateclub" subreddit) */
+        setLoading(false)
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [keywords, pagination, random]);

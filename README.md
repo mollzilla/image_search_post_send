@@ -14,6 +14,8 @@ I'm attempting to tackle all, or at least some of the unfinished but desired fea
 
 I want to deliver the best project, and even if it's post deadline and it won't be considered for my evaluation, I want to do it for my personal betterment.
 
+I started correctin some styling issues and carefully documenting the project. My next steps are tacking as many 400 errors as possible.
+
 
 *********************************************
 

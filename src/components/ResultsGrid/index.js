@@ -47,14 +47,13 @@ const ResultsGrid = () => {
     <>
       {/* <pre>{JSON.stringify(results, null, 1)}</pre> */}
       <h1 style={{ textAlign: "center" }}>
-        {images && images.length > 0
-          ? "Showing " + images.length + " results"
+        {elements && elements.length > 0
+          ? "Showing " + elements.length + " results"
           : "No results to show"}
       </h1>
       {err400Message && <h2>{err400Message}</h2>}
 
       <Grid>
-
         {/* id: child.data.id,
             kind: child.kind,
             awards: child.data.total_awards_received,
@@ -64,8 +63,13 @@ const ResultsGrid = () => {
         {elements &&
           elements.map((element, i) =>
             elements.length === i + 1 ? (
-              <a href={element?.image} target="_blank" rel="noopener noreferrer">
+              <a
+                href={element?.image}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <div
+                  id={element.id}
                   style={{
                     boxShadow: "5px 5px 30px #AAAAAA",
                     borderRadius: "5px",
@@ -82,8 +86,13 @@ const ResultsGrid = () => {
                 </div>
               </a>
             ) : (
-             <a href={element?.image} target="_blank" rel="noopener noreferrer">
+              <a
+                href={element?.image}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <div
+                  id={element.id}
                   style={{
                     overflow: "hidden",
                     width: "100%",
