@@ -53,6 +53,20 @@ export default function ImgContextProvider({ children }) {
     let randomWord = "";
 
     /* In case user has clicked on a random word, trigger a fetch and set a local scope variable with it */
+
+    if (keywords === "" && randomWord === "") return;
+
+    /* build the (optional) parameter string with the "after" variable from previous fetch */
+    let afterParam = pagination > 1 && after !== null ? `?&after=${after}` : "";
+
+    const subreddit = axios.get(
+      `https://www.reddit.com/subreddits/search.json?q=${keywords}`
+    );
+
+    const queryString = `https://www.reddit.com/r/${
+      random ? randomWord : keywords
+    }/top.json${afterParam}`;
+
     if (random) {
       return axios
         .get(
@@ -63,35 +77,22 @@ export default function ImgContextProvider({ children }) {
           randomWord = newRandom.data[0];
         })
         .catch(err => {
-          console.log(err)
+          console.log(err);
         });
     }
 
-    if (keywords === "" && randomWord === "") return;
-
-    /* build the (optional) parameter string with the "after" variable from previous fetch */
-    let afterParam = pagination > 1 && after !== null ? `?&after=${after}` : "";
-
-    const subreddit = axios.get(
-      `https://www.reddit.com/subreddits/search.json?q=${keywords}&exact=true`
-    );
-
-    const queryString = `https://www.reddit.com/r/${
-      random ? randomWord : keywords
-    }/top.json${afterParam}`;
-
     subreddit
-      .then(subreddits =>
-        subreddits.data.data.children.filter(
-          child => child.data.display_name === keywords
-        )
-      )
+      // .then(subreddits =>
+      //   subreddits.data.data.children.filter(
+      //     child => child.data.display_name === keywords
+      //   )
+      // )
       .then(subreddits => {
-        console.log(subreddits.length)
-        if (subreddits.length === 0) {
-          setError(true)
-          console.log(94)
-          setErr400Message("It seels like this subreddit doesn't exist...");
+        console.log(subreddits.data.data.children.length);
+        if (subreddits.data.data.children.length === 0) {
+          setError(true);
+          console.log(94);
+          setErr400Message("It seems like this subreddit doesn't exist...");
           throw new Error("It seems like this subreddit doesn't exist...");
         } else {
           console.log(subreddits);
@@ -100,17 +101,14 @@ export default function ImgContextProvider({ children }) {
       })
       .then(() => axios.get(queryString))
       .then(newResults => {
-        // console.log(newResults)
         /* Originally a normalized images function was contemplated to retrieve not only image urls, but also gallery images and even icons */
         // const newImages = Utils.normalizeImages(newResults?.data?.data?.children);
-setErr400Message("");
+        console.log(newResults)
+        setErr400Message("");
         setAfter(newResults?.data?.data?.after);
 
-        /* info fetched was considered for future iterations */
         let info = newResults?.data?.data.children;
         setRandom(null);
-
-        /* Future iteration: add further information to images displayed */
 
         let newElements = [...info]
           .filter(child => child.data.over_18 !== true)
@@ -121,7 +119,12 @@ setErr400Message("");
               child.data.url.match(
                 /^(?!.*(default|self|nsfw|spoiler|gallery|v.|gifv|redgifs)).*$/
               )
-          )
+          ).filter(child => {
+            if(nsfwFilter)
+              return child.data.url.match(/^(?!.*(nsfw)).*$/);
+            else
+              return child;
+            })
           .map(child => ({
             id: child.data.id,
             kind: child.kind,
@@ -141,7 +144,7 @@ setErr400Message("");
 
       .catch(err => {
         setRandom("");
-        setLoading(false)
+        setLoading(false);
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [keywords, pagination, random]);
