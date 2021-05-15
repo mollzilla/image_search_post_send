@@ -30,7 +30,7 @@ export default class Utils {
           url !== ""
       );
 
-      /* metadataimages are mapped to get the 320px resolution */
+    /* metadataimages are mapped to get the 320px resolution */
     if (imagesObject)
       metadataImages = Object.keys(imagesObject).map(
         key => imagesObject[key].p[1].u
@@ -40,15 +40,38 @@ export default class Utils {
   }
 
   static handleError(err) {
-
     if (err.response) {
       if (err.response.status === 403) {
-        return("It seems like this subreddit is private...");
+        return "It seems like this subreddit is private...";
       }
       if (err.response.status === 404 || err.response.status === 451) {
-        return("It seems like this subreddit doesn't exist...");
+        return "It seems like this subreddit doesn't exist...";
       }
     }
     return;
+  }
+
+  static normalizeResults(resultsArray, nsfwFilter) {
+    return resultsArray
+      .filter(child => child.data.over_18 !== true)
+      .filter(
+        /* URL is filtered to include only safe for all content and matched with images files. Not used extensions because of i.redd cases*/
+        child =>
+          child.data.url.match(/(i.redd|jpg|gif|imgur|jpeg|png)/) &&
+          child.data.url.match(
+            /^(?!.*(default|self|nsfw|spoiler|gallery|v.|gifv|redgifs)).*$/
+          )
+      )
+      .filter(child => {
+        if (nsfwFilter) return child.data.url.match(/^(?!.*(nsfw)).*$/);
+        else return child;
+      })
+      .map(child => ({
+        id: child.data.id,
+        kind: child.kind,
+        awards: child.data.total_awards_received,
+        image: child.data.url,
+        title: child.data.title
+      }));
   }
 }

@@ -20,7 +20,6 @@ export default function ImgContextProvider({ children }) {
   const [images, setImages] = useState([]);
   const [elements, setElements] = useState([]);
 
-  const [results, setResults] = useState([]);
   const [pagination, setPagination] = useState(1);
 
   const [after, setAfter] = useState("");
@@ -28,12 +27,16 @@ export default function ImgContextProvider({ children }) {
 
   const [nsfwFilter, setNsfwFilter] = useState(true);
 
+  const addToStore = (img) => {
+    localStorage.setItem("favorite", img);
+    console.log(localStorage)
+  } 
+
   /**
    * Clean up variables whenever user triggers a new search with a new keyword
    */
 
   useEffect(() => {
-    setResults([]);
     setImages([]);
     setElements([]);
     setPagination(1);
@@ -54,8 +57,6 @@ export default function ImgContextProvider({ children }) {
 
     /* In case user has clicked on a random word, trigger a fetch and set a local scope variable with it */
 
-    if (keywords === "" && randomWord === "") return;
-
     /* build the (optional) parameter string with the "after" variable from previous fetch */
     let afterParam = pagination > 1 && after !== null ? `?&after=${after}` : "";
 
@@ -63,11 +64,8 @@ export default function ImgContextProvider({ children }) {
       `https://www.reddit.com/subreddits/search.json?q=${keywords}`
     );
 
-    const queryString = `https://www.reddit.com/r/${
-      random ? randomWord : keywords
-    }/top.json${afterParam}`;
-
     if (random) {
+      console.log("random");
       return axios
         .get(
           "https://secret-ocean-49799.herokuapp.com/https://random-word-api.herokuapp.com/word"
@@ -80,20 +78,18 @@ export default function ImgContextProvider({ children }) {
           console.log(err);
         });
     }
+    if (keywords === "" && randomWord === "") return;
+    const queryString = `https://www.reddit.com/r/${
+      random ? randomWord : keywords
+    }/top.json${afterParam}`;
 
     subreddit
-      // .then(subreddits =>
-      //   subreddits.data.data.children.filter(
-      //     child => child.data.display_name === keywords
-      //   )
-      // )
       .then(subreddits => {
-        console.log(subreddits.data.data.children.length);
         if (subreddits.data.data.children.length === 0) {
           setError(true);
           console.log(94);
-          setErr400Message("It seems like this subreddit doesn't exist...");
-          throw new Error("It seems like this subreddit doesn't exist...");
+          setErr400Message("It seems like there are no subreddits matching those keywords...");
+          throw new Error("It seems like there are no subreddits matching those keywords...");
         } else {
           console.log(subreddits);
         }
@@ -103,42 +99,18 @@ export default function ImgContextProvider({ children }) {
       .then(newResults => {
         /* Originally a normalized images function was contemplated to retrieve not only image urls, but also gallery images and even icons */
         // const newImages = Utils.normalizeImages(newResults?.data?.data?.children);
-        console.log(newResults)
         setErr400Message("");
+        
         setAfter(newResults?.data?.data?.after);
-
         let info = newResults?.data?.data.children;
-        setRandom(null);
-
-        let newElements = [...info]
-          .filter(child => child.data.over_18 !== true)
-          .filter(
-            /* URL is filtered to include only safe for all content and matched with images files. Not used extensions because of i.redd cases*/
-            child =>
-              child.data.url.match(/(i.redd|jpg|gif|imgur|jpeg|png)/) &&
-              child.data.url.match(
-                /^(?!.*(default|self|nsfw|spoiler|gallery|v.|gifv|redgifs)).*$/
-              )
-          ).filter(child => {
-            if(nsfwFilter)
-              return child.data.url.match(/^(?!.*(nsfw)).*$/);
-            else
-              return child;
-            })
-          .map(child => ({
-            id: child.data.id,
-            kind: child.kind,
-            awards: child.data.total_awards_received,
-            image: child.data.url,
-            title: child.data.title
-          }));
-
+        
+        const newElements = Utils.normalizeResults([...info], nsfwFilter)
+        
         setElements(prevElements => {
           return [...new Set([...prevElements, ...newElements])];
         });
-
-        setResults(newResults);
-
+        
+        setRandom(false);
         setLoading(false);
       })
 
@@ -152,7 +124,6 @@ export default function ImgContextProvider({ children }) {
   return (
     <ImgContext.Provider
       value={{
-        results,
         after,
         images,
         pagination,
@@ -166,7 +137,8 @@ export default function ImgContextProvider({ children }) {
         random,
         setRandom,
         nsfwFilter,
-        setNsfwFilter
+        setNsfwFilter,
+        addToStore
       }}
     >
       {children}

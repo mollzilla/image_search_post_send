@@ -3,6 +3,8 @@ import React, { useContext, useRef, useCallback } from "react";
 import styled from "styled-components";
 import { ImgContext } from "../../context/ImagesContext";
 
+import star from "@images/star.png";
+
 /**
  *
  * @returns A grid containing the results amount as it populates, the images fetched and, in case of inexistent or private subreddit, a message to the user
@@ -11,13 +13,12 @@ import { ImgContext } from "../../context/ImagesContext";
 const ResultsGrid = () => {
   const {
     loading,
-    images,
     pagination,
     setPagination,
     after,
     err400Message,
-    results,
-    elements
+    elements,
+    addToStore,
   } = useContext(ImgContext);
 
   const observer = useRef();
@@ -63,51 +64,59 @@ const ResultsGrid = () => {
         {elements &&
           elements.map((element, i) =>
             elements.length === i + 1 ? (
-              <a
-                href={element?.image}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <div
+              <div className="result">
+                <a
                   id={element.id}
-                  style={{
-                    boxShadow: "5px 5px 30px #AAAAAA",
-                    borderRadius: "5px",
-                    overflow: "hidden"
-                  }}
+                  href={element?.image}
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
-                  <img
-                    ref={lastImgRef}
-                    src={element.image?.replace(/amp;/g, "")}
-                    alt="search result"
-                    key={i}
-                  />
-                  <p>{element.title || "No title"}</p>
-                </div>
-              </a>
+                  <div
+                    style={{
+                      overflow: "hidden"
+                    }}
+                  >
+                    <img
+                      ref={lastImgRef}
+                      src={element.image?.replace(/amp;/g, "")}
+                      alt="search result"
+                      key={i}
+                    />
+                    <p>{element.title || "No title"}</p>
+                  </div>
+                </a>
+                <button onClick={() => console.log("click!")} className="add-favorites">Add to favorites</button>
+              </div>
             ) : (
-              <a
-                href={element?.image}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <div
+              <div className="result">
+                <a
                   id={element.id}
-                  style={{
-                    overflow: "hidden",
-                    width: "100%",
-                    boxShadow: "5px 5px 30px #AAAAAA",
-                    borderRadius: "5px"
-                  }}
+                  href={element?.image}
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
-                  <img
-                    src={element.image?.replace(/amp;/g, "")}
-                    alt="search result"
-                    key={i}
-                  />
-                  <p>{element.title || "No title"}</p>
-                </div>
-              </a>
+                  <div
+                    style={{
+                      width: "100%"
+                    }}
+                  >
+                    <img
+                      src={element.image?.replace(/amp;/g, "")}
+                      alt="search result"
+                      key={i}
+                    />
+                    <p>{element.title || "No title"}</p>
+                  </div>
+                  {(element.awards && (
+                    <div className="awards-star">
+                      <img src={star} alt="awards star" />
+                      <span>Awarded!</span>
+                    </div>
+                  )) ||
+                    ""}
+                </a>
+                <button onClick={() => addToStore(element.image)} className="add-favorites">Add to favorites</button>
+              </div>
             )
           )}
       </Grid>
@@ -124,6 +133,38 @@ export default ResultsGrid;
 //#AECF80
 
 const Grid = styled.section`
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+
+  .result {
+    @keyframes pop {
+      0% {
+        box-shadow: 5px 5px 10px #bcbcbc;
+      }
+      75% {
+        box-shadow: 0px 0px 25px 10px #aaa;
+      }
+      100% {
+        box-shadow: 5px 5px 10px #bcbcbc;
+      }
+    }
+  }
+
+  .result {
+    overflow: hidden;
+    border-radius: 25px;
+    box-shadow: 5px 5px 30px #aaaaaa;
+  }
+
+  .result:hover {
+    animation: pop 0.6s;
+  }
+
+  a {
+    position: relative;
+    text-decoration: none;
+    color: #303030;
+  }
   img {
     margin: 0 auto;
   }
@@ -133,8 +174,65 @@ const Grid = styled.section`
 
     margin-bottom: 0;
     text-align: center;
+  }
+
+  .awards-star {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .awards-star img {
+    height: 30px;
+  }
+
+  .awards-star span {
+    font-size: 14px;
+    display: block;
+    margin: 0 auto;
+    color: #fff;
+    -webkit-text-stroke: 1px #000; /* width and color */
+    font-weight: bolder;
+  }
+
+  @keyframes bouncy {
+    40% {
+      transform: scale(1.1);
+      opacity: 0.6;
+    }
+    60% {
+      transform: scale(1.025);
+      opacity: 0.8;
+    }
+    85% {
+      transform: scale(1.05);
+      opacity: 0.9;
+    }
+    94% {
+      transform: scale(1.025);
+      opacity: 1;
+    }
+  }
+
+  .add-favorites {
+    cursor: pointer;
+    display: block;
+    margin: 10px auto;
+    justify-self: center;
+    background: #322885;
+    border: none;
+    padding: 5px 10px;
+    outline: none;
+    border-radius: 110px;
+    color: #fafafa;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
       Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  }
+
+  .add-favorites:hover {
+    animation: bouncy 0.4s;
   }
 
   padding: 32px;

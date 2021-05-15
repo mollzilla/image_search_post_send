@@ -16,6 +16,10 @@ I want to deliver the best project, and even if it's post deadline and it won't 
 
 I started correctin some styling issues and carefully documenting the project. My next steps are tacking as many 400 errors as possible.
 
+I was able to tacke down many of the 400 errors by verifying that the exact subreddit name existed; however; that would not be exactly in line with the assignment and therefore, settled for a verification of related subreddits, which diminished significantly those errors. Furthermore, an error was thrown before the fetch, adding efficiency.
+
+While considering two subjects, one, that the random word promise and the fetch promise were not chained, therefore several requests were thrown, and second, questioning if a debouncer was necessary, decided to change subjects in order to clear my head and started thinking of adding an award star to entries.
+
 
 *********************************************
 

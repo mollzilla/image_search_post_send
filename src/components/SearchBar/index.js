@@ -8,7 +8,7 @@ import styled from "styled-components";
  */
 
 const SearchBar = () => {
-  const { keywords, setKeywords, setRandom, nsfwFilter, setNsfwFilter } = useContext(ImgContext);
+  const { keywords, setKeywords, setRandom, random, nsfwFilter, setNsfwFilter } = useContext(ImgContext);
 
   return (
     <SearchForm>
@@ -18,7 +18,7 @@ const SearchBar = () => {
         onChange={e => setKeywords(e.target.value)}
         value={keywords}
       ></input>
-      <button onClick={() => setRandom(true)}>Random!</button>
+      <button onClick={() => {setRandom(true); console.log("random!", random)}}>Random!</button>
       {!nsfwFilter && <span>Warning! Random words might return unexpected NSFW images.</span>}
       <button onClick={() => setNsfwFilter(!nsfwFilter)}>{nsfwFilter===true ? "Disable NSFW filter" : "Enable NSFW filter"}</button>
     </SearchForm>
