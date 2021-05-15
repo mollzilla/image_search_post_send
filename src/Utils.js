@@ -38,4 +38,17 @@ export default class Utils {
 
     return [...imagesUrl, ...metadataImages, ...imagesThumbnail];
   }
+
+  static handleError(err) {
+
+    if (err.response) {
+      if (err.response.status === 403) {
+        return("It seems like this subreddit is private...");
+      }
+      if (err.response.status === 404 || err.response.status === 451) {
+        return("It seems like this subreddit doesn't exist...");
+      }
+    }
+    return;
+  }
 }

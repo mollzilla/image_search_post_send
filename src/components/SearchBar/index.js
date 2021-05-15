@@ -8,7 +8,7 @@ import styled from "styled-components";
  */
 
 const SearchBar = () => {
-  const { keywords, setKeywords, setRandom } = useContext(ImgContext);
+  const { keywords, setKeywords, setRandom, nsfwFilter, setNsfwFilter } = useContext(ImgContext);
 
   return (
     <SearchForm>
@@ -19,7 +19,8 @@ const SearchBar = () => {
         value={keywords}
       ></input>
       <button onClick={() => setRandom(true)}>Random!</button>
-      <span>For your convenience, NSFW images have been filtered.</span>
+      {!nsfwFilter && <span>Warning! Random words might return unexpected NSFW images.</span>}
+      <button onClick={() => setNsfwFilter(!nsfwFilter)}>{nsfwFilter===true ? "Disable NSFW filter" : "Enable NSFW filter"}</button>
     </SearchForm>
   );
 };
@@ -50,6 +51,7 @@ const SearchForm = styled.div`
     text-align: center;
   }
   button {
+    cursor: pointer;
     display: block;
     margin: 25px auto;
     justify-self: center;

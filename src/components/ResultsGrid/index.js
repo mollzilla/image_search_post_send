@@ -64,7 +64,7 @@ const ResultsGrid = () => {
         {elements &&
           elements.map((element, i) =>
             elements.length === i + 1 ? (
-              //<a href={element?.image}>
+              <a href={element?.image} target="_blank" rel="noopener noreferrer">
                 <div
                   style={{
                     boxShadow: "5px 5px 30px #AAAAAA",
@@ -80,9 +80,9 @@ const ResultsGrid = () => {
                   />
                   <p>{element.title || "No title"}</p>
                 </div>
-           //   </a>
+              </a>
             ) : (
-            //  <a href={element?.image}>
+             <a href={element?.image} target="_blank" rel="noopener noreferrer">
                 <div
                   style={{
                     overflow: "hidden",
@@ -98,7 +98,7 @@ const ResultsGrid = () => {
                   />
                   <p>{element.title || "No title"}</p>
                 </div>
-            //  </a>
+              </a>
             )
           )}
       </Grid>
@@ -127,6 +127,7 @@ const Grid = styled.section`
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
       Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   }
+
   padding: 32px;
   display: grid;
   grid-template-rows: (minmax(1fr, 140px));
