@@ -101,6 +101,7 @@ export default function ImgContextProvider({ children }) {
 
         /* info fetched was considered for future iterations */
         let info = [];
+        
         info = newResults?.data?.data.children;
         setRandom(null);
 
