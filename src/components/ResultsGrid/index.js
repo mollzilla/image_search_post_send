@@ -85,7 +85,7 @@ const ResultsGrid = () => {
                     <p>{element.title || "No title"}</p>
                   </div>
                 </a>
-                <button onClick={() => console.log("click!")} className="add-favorites">Add to favorites</button>
+                <button onClick={() => addToStore(element)} className="add-favorites">Add to favorites</button>
               </div>
             ) : (
               <div className="result">
@@ -115,7 +115,7 @@ const ResultsGrid = () => {
                   )) ||
                     ""}
                 </a>
-                <button onClick={() => addToStore(element.image)} className="add-favorites">Add to favorites</button>
+                <button onClick={() => addToStore(element)} className="add-favorites">Add to favorites</button>
               </div>
             )
           )}

@@ -27,10 +27,21 @@ export default function ImgContextProvider({ children }) {
 
   const [nsfwFilter, setNsfwFilter] = useState(true);
 
-  const addToStore = (img) => {
-    localStorage.setItem("favorite", img);
-    console.log(localStorage)
-  } 
+  const addToStore = element => {
+console.log(localStorage.getItem("pantalones"))
+
+    if (localStorage.getItem("favorites") == null) {
+      console.log("yes")
+      localStorage.setItem("favorites", `[${JSON.stringify(element)}]`);
+    }
+    localStorage.setItem("mili", "mili")
+    console.log(localStorage.getItem("mili"))
+    console.log(localStorage.getItem("favorites"));
+    // setItemluego
+    // JSON.stringify(item)
+
+    // JSON.parse(books)
+  };
 
   /**
    * Clean up variables whenever user triggers a new search with a new keyword
@@ -88,8 +99,12 @@ export default function ImgContextProvider({ children }) {
         if (subreddits.data.data.children.length === 0) {
           setError(true);
           console.log(94);
-          setErr400Message("It seems like there are no subreddits matching those keywords...");
-          throw new Error("It seems like there are no subreddits matching those keywords...");
+          setErr400Message(
+            "It seems like there are no subreddits matching those keywords..."
+          );
+          throw new Error(
+            "It seems like there are no subreddits matching those keywords..."
+          );
         } else {
           console.log(subreddits);
         }
@@ -100,16 +115,16 @@ export default function ImgContextProvider({ children }) {
         /* Originally a normalized images function was contemplated to retrieve not only image urls, but also gallery images and even icons */
         // const newImages = Utils.normalizeImages(newResults?.data?.data?.children);
         setErr400Message("");
-        
+
         setAfter(newResults?.data?.data?.after);
         let info = newResults?.data?.data.children;
-        
-        const newElements = Utils.normalizeResults([...info], nsfwFilter)
-        
+
+        const newElements = Utils.normalizeResults([...info], nsfwFilter);
+
         setElements(prevElements => {
           return [...new Set([...prevElements, ...newElements])];
         });
-        
+
         setRandom(false);
         setLoading(false);
       })
